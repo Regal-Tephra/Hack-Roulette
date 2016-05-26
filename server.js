@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var passport = require('passport')
 // app.use(express.static(path.join(__dirname,'public')));
 
 var handler = require('./request-handler');
