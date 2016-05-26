@@ -1,0 +1,21 @@
+{
+  "name": "hack-roulette",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Aaron Freidus <aaronf101@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Regal-Tephra/Hack-Roulette",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^15.1.0",
+    "bootstrap": "^3.3.6"
+  }
+}
