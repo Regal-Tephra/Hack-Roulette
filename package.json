@@ -1,0 +1,31 @@
+{
+  "name": "hack-roulette",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test:watch": "npm run test -- --watch"
+  },
+  "babel": {
+    "presets":["es2015"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinba/Hack-Roulette.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austinba/Hack-Roulette/issues"
+  },
+  "homepage": "https://github.com/austinba/Hack-Roulette#readme",
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-runtime": "^6.9.0",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
+  }
+}
