@@ -1,0 +1,19 @@
+{
+  "name": "hack-roulette",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Regal-Tephra/Hack-Roulette.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Regal-Tephra/Hack-Roulette/issues"
+  },
+  "homepage": "https://github.com/Regal-Tephra/Hack-Roulette#readme"
+}
