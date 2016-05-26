@@ -1,6 +1,6 @@
 var request = require('request');
 
-// var db = require('./data/db/config');
+var db = require('./data/db/config');
 var User = require('./data/db/models/user');
 
 exports.loginForm = function(req, res) {
