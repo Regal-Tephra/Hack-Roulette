@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/austinba/Hack-Roulette.git"
+    "url": "git+https://github.com/Regal-Tephra/Hack-Roulette.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/austinba/Hack-Roulette/issues"
+    "url": "https://github.com/Regal-Tephra/Hack-Roulette/issues"
   },
-  "homepage": "https://github.com/austinba/Hack-Roulette#readme",
+  "homepage": "https://github.com/Regal-Tephra/Hack-Roulette#readme",
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.0",
