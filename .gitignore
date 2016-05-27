@@ -1,7 +1,4 @@
 node_modules/
 public/components
-<<<<<<< HEAD
 .DS_Store
-=======
 keys.js
->>>>>>> Github Oauth logged in /logged out logic complete
