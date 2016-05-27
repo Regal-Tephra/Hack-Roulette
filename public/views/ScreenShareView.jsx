@@ -4,7 +4,7 @@ const socket = io();
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: 'hello'};
+    this.state = {value: ''};
     socket.on('text change', function(text){
       this.setState({value: text});
     }.bind(this));
@@ -15,7 +15,8 @@ class ScreenShareView extends React.Component {
     this.setState({
       value: event.target.value
     });
-    socket.emit('change', this.state.value);
+    this.setState({temp: event.target.value});
+    socket.emit('change', event.target.value);
   }
 	render() {
 		return (
@@ -23,7 +24,8 @@ class ScreenShareView extends React.Component {
       type="text"
       value={this.state.value}
       onChange={this.handleChange.bind(this)}
-      /><p>{this.props.userId}</p></div>
+      /><p>{this.props.userId}</p>
+      <p>{this.state.temp}</p></div>
     );
 	}
 }
