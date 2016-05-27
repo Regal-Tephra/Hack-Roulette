@@ -12,10 +12,6 @@ var gitHubStrategy = require('passport-github2').Strategy;
 var secrets = require('./keys.js');
 var sessionOptions = { secret: 'some other thing!?' };
 
-// ion.on('connection', function(){
-//   console.log('connected to io');
-// });
-
 // app.use(express.static(path.join(__dirname,'public')));
 
 // serialize and deserializeUser 
