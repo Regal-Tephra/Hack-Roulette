@@ -1,9 +1,10 @@
+// do not change the order of these
 var express = require('express');
 var session = require('express-session');
-var io = require('socket.io')(server);
 var http = require('http');
 var app = express();
 var server = http.createServer(app);
+var io = require('socket.io')(server);
 var path = require('path');
 var handler = require('./request-handler');
 
@@ -12,7 +13,7 @@ var gitHubStrategy = require('passport-github2').Strategy;
 var secrets = require('./keys.js');
 var sessionOptions = { secret: 'some other thing!?' };
 
-// app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'public')));
 
 // serialize and deserializeUser 
 passport.serializeUser(function(user, done) {
@@ -26,8 +27,12 @@ passport.deserializeUser(function(obj, done) {
 app.use(session(sessionOptions));
 
 //need views to render this as script has to run on page load;
-io.on('connection', function(){
+io.on('connection', function(socket){
   console.log('connected');
+  socket.on('change', function(text){
+    console.log(text)
+     socket.broadcast.emit('text change',text);
+  })
 })
 
 //creates github strategy for our app
@@ -61,7 +66,7 @@ app.get('/auth/github/callback',
 
 //logged in home page
 app.get('/', handler.isUser, function(req, res) {
-  res.send('hello world, user is logged in as: ' + req.user.username);
+  // res.send('hello world, user is logged in as: ' + req.user.username);
 });
 
 //landing page
