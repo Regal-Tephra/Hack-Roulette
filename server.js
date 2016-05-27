@@ -1,4 +1,5 @@
 // do not change the order of these
+const _ = require('underscore');
 const express = require('express');
 const session = require('express-session');
 const http = require('http');
@@ -27,13 +28,31 @@ passport.deserializeUser((obj, done) => {
 // creates the req.user property when logged in
 app.use(session(sessionOptions));
 
+const clients = {};
 // need views to render this as script has to run on page load;
 io.on('connection', socket => {
-  console.log(socket);
-  console.log('connected');
+  console.log('connected', socket.id);
+
   socket.on('change', text => {
     console.log(text);
     socket.broadcast.emit('text change', text);
+    // clients[1].emit('text change', text);
+  });
+  socket.on('connectUser', userId => {
+    console.log(userId);
+    clients[userId] = socket;
+    console.log('  Clients:', Object.keys(clients));
+    // socket.userId = userId;
+  });
+
+  socket.on('disconnect', () => {
+    _.each(clients, (clientSocket, userId) => {
+      if (clientSocket === socket) {
+        delete clients[userId];
+        console.log('Disconnected:', userId);
+      }
+    });
+    console.log('  Clients:', Object.keys(clients));
   });
 });
 
