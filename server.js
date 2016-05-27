@@ -1,82 +1,84 @@
 // do not change the order of these
-var express = require('express');
-var session = require('express-session');
-var http = require('http');
-var app = express();
-var server = http.createServer(app);
-var io = require('socket.io')(server);
-var path = require('path');
-var handler = require('./request-handler');
+const express = require('express');
+const session = require('express-session');
+const http = require('http');
+const app = express();
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
-var passport = require('passport');
-var gitHubStrategy = require('passport-github2').Strategy;
-var secrets = require('./keys.js');
-var sessionOptions = { secret: 'some other thing!?' };
+const path = require('path');
+const handler = require('./request-handler');
 
-app.use(express.static(path.join(__dirname,'public')));
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
+const secrets = require('./keys.js');
+const sessionOptions = { secret: 'some other thing!?' };
 
-// serialize and deserializeUser 
-passport.serializeUser(function(user, done) {
+app.use(express.static(path.join(__dirname, 'public')));
+
+// serialize and deserializeUser
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
-//creates the req.user property when logged in
+// creates the req.user property when logged in
 app.use(session(sessionOptions));
 
-//need views to render this as script has to run on page load;
-io.on('connection', function(socket){
+// need views to render this as script has to run on page load;
+io.on('connection', socket => {
+  console.log(socket);
   console.log('connected');
-  socket.on('change', function(text){
-    console.log(text)
-     socket.broadcast.emit('text change',text);
-  })
-})
+  socket.on('change', text => {
+    console.log(text);
+    socket.broadcast.emit('text change', text);
+  });
+});
 
-//creates github strategy for our app
-passport.use(new gitHubStrategy({
+// creates github strategy for our app
+passport.use(new GitHubStrategy({
   clientID: secrets.GITHUB_CLIENT_ID,
   clientSecret: secrets.GITHUB_CLIENT_SECRET,
-  callbackURL: 'http://127.0.0.1:3000/auth/github/callback'
-}, function(accessToken, refreshToken, profile, done) { 
-  process.nextTick(function() {
-    return done(null, profile);
-  });
+  callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
+}, (accessToken, refreshToken, profile, done) => {
+  process.nextTick(() =>
+    done(null, profile)
+  );
 }));
 
-//creates sessions on our app
+// creates sessions on our app
 app.use(passport.initialize());
 app.use(passport.session());
 
 // attach to login button
-app.get('/auth/github', 
-  passport.authenticate('github', {scope: ['user:email', 'read:org']}),
-  function(req, res) {
+app.get('/auth/github',
+  passport.authenticate('github', { scope: ['user:email', 'read:org'] }),
+  () => {
 
   }
 );
 
 // callback for auth
 app.get('/auth/github/callback',
-  passport.authenticate('github', {failureRedirect: '/login'}),
+  passport.authenticate('github', { failureRedirect: '/login' }),
   handler.loggedInUser
 );
 
-//logged in home page
-app.get('/', handler.isUser, function(req, res) {
+// logged in home page
+app.get('/', handler.isUser, () => {
   // res.send('hello world, user is logged in as: ' + req.user.username);
 });
 
-//landing page
-app.get('/login', function(req, res){
+// landing page
+app.get('/login', (req, res) => {
   res.send('login page');
 });
 
-//logout request
+// logout request
 app.get('/logout', handler.logoutUser);
 
-server.listen(3000, function () {
+server.listen(3000, () => {
   console.log('Tephra listening on port 3000!');
 });
