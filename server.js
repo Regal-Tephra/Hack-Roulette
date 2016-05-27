@@ -27,8 +27,12 @@ passport.deserializeUser(function(obj, done) {
 app.use(session(sessionOptions));
 
 //need views to render this as script has to run on page load;
-io.on('connection', function(){
+io.on('connection', function(socket){
   console.log('connected');
+  socket.on('change', function(text){
+    console.log(text)
+     socket.broadcast.emit('text change',text);
+  })
 })
 
 //creates github strategy for our app
