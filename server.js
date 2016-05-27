@@ -1,6 +1,9 @@
 var express = require('express');
 var session = require('express-session');
+var io = require('socket.io')(server);
+var http = require('http');
 var app = express();
+var server = http.createServer(app);
 var path = require('path');
 var handler = require('./request-handler');
 
@@ -22,6 +25,10 @@ passport.deserializeUser(function(obj, done) {
 //creates the req.user property when logged in
 app.use(session(sessionOptions));
 
+//need views to render this as script has to run on page load;
+io.on('connection', function(){
+  console.log('connected');
+})
 
 //creates github strategy for our app
 passport.use(new gitHubStrategy({
@@ -59,12 +66,12 @@ app.get('/', handler.isUser, function(req, res) {
 
 //landing page
 app.get('/login', function(req, res){
-  res.send('not logged in');
+  res.send('login page');
 });
 
 //logout request
 app.get('/logout', handler.logoutUser);
 
-app.listen(3000, function () {
+server.listen(3000, function () {
   console.log('Tephra listening on port 3000!');
 });
