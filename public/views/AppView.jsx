@@ -12,7 +12,7 @@ class AppView extends React.Component {
 	    );
   	}
 };
+var socket = io();
 
 ReactDOM.render(<AppView />, document.getElementById('app'));
-
 window.AppView = AppView;
