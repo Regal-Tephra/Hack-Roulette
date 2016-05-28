@@ -1,3 +1,5 @@
+/* global React */
+
 class ScreenShareView extends React.Component {
 	render() {
 		return (
