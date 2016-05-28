@@ -1,11 +1,9 @@
-/* global React */
+/* global React NavbarView */
 
-class FeedbackView extends React.Component {
-  render() {
-    return (
-        <div>Screen Share View</div>
-      )
-  }
-}
+const FeedbackView = (props) =>
+  <div>
+    <NavbarView />
+    <div>{props} This is the feedback view</div>
+  </div>;
 
 window.FeedbackView = FeedbackView;
