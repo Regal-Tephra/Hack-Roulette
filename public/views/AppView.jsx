@@ -9,12 +9,13 @@
   ReactDOM
   io
 */
+const userIdOptions = ['Greg', 'Thomas', 'Andy', 'Erika', 'Selena', 'Josh', 'William', 'Brittany'];
 class AppView extends React.Component {
   constructor(props) {
     super(props);
 
     // Currently Hardcoded
-    this.userID = 'Sally';
+    this.userId = userIdOptions[Math.floor(Math.random()*userIdOptions.length)];
     // this.handleChange = this.handleChange.bind(this);
 
     this.pages = {
@@ -40,6 +41,7 @@ class AppView extends React.Component {
     );
   }
 }
+
 
 
 ReactDOM.render(<AppView />, document.getElementById('app'));
