@@ -6,9 +6,13 @@
 
 const MainpageView = (props) =>
   (<div>
-    <h1>MainPageView</h1>
-    {props}
     <NavbarView />
+    <div>
+      Please Enter Your Why You Need Help and the Language
+      <br></br>
+      <input></input><br></br>
+      <button>Submit</button>
+    </div>
   </div>
   );
 
