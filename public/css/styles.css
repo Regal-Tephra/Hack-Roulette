@@ -1,3 +1,52 @@
+@import url(https://fonts.googleapis.com/css?family=Pontano+Sans|Rock+Salt);
+html {
+  box-sizing: border-box;
+  font-family: 'Pontano Sans', sansserif;
+}
+html, body, .app {
+  height: 100%;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+.login-button {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 9px;
+  width: 100px;
+  height: 100px;
+  background-color: black;
+  color: white;
+  box-shadow: 0 0 1px 1px rgba(0,0,0, 0.5);
+  font-size: 40px;
+  transform: rotate(20deg);
+  text-align: center;
+}
+.login-button-wrapper {
+  margin-top: 25px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 25px;
+  width: 150px;
+  height: 150px;
+}
+.login-button-wrapper:hover .login-button {
+  transform: rotate(0deg);
+}
+.container {
+  padding: 20px 5px;
+/*  border-left: 2px #333 dotted;
+  border-right: 2px #333 dotted;*/
+  background-color: rgba(255, 255, 255, 0.95);
+  height: 100%;
+  width: 100%;
+}
+.title { 
+  font-size: 63px;
+  color: black;
+  height: 70px;
+  text-align: center;
+}
 .session-text-share {
-	width: 100%;
+  width: 100%;
 }
