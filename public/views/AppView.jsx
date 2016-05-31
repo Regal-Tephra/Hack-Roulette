@@ -26,7 +26,7 @@ class AppView extends React.Component {
     };
 
     this.state = {
-      currentPage: 'Session',
+      currentPage: 'Landingpage',
       navBarToggle: false,
     };
   }
