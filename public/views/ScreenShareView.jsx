@@ -1,60 +1,40 @@
-/* global React */
+/* global
+   React
+   _
+   io
+   */
 
 const socket = io();
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ['l']};
-    socket.on('text change', function(text){
-      console.log('RECEIVED', text.split('\n'));
-      this.setState({value: text.split('\n')});
-    }.bind(this));
+    this.state = { text: '' };
+    this.editorUpdated = this.editorUpdated.bind(this);
+    socket.on('text change', text => {
+      this.setState({ text });
+    });
     socket.emit('connectUser', this.props.userId);
   }
-  convertToText(html = '') {
-    let text;
-    console.log('html', html);
-    text = html.replace('\n', '');
-    text = text.replace(/<\/p>/gi, '</p>\n');
-    text = text.slice(0, text.length-1)
-
-    // Have browser strip html tags for us in false DIV element
-    let tempDiv = document.createElement('div');
-    tempDiv.innerHTML = text;
-    text = tempDiv.textContent || tempDiv.innerText || '';
-    text = _.unescape(text);
-    console.log('text', text);
-    return text;
-  }
-  // convertToDivText(text = '') {
-  //   console.log(text);
-  //   return text.replace(/\n/g, '<br />');
-  // }
-
   editorUpdated(event) {
-    const cleanedUpText = this.convertToText(event.target.innerHTML);
-    // console.log(cleanedUpText);
-    this.setState({
-      value: [] //cleanedUpText.split('\n')
-    });
-    socket.emit('change', cleanedUpText);
+    const text = event.target.value;
+    this.setState({ text });
+    socket.emit('change', text);
   }
-	render() {
-    console.log(this.state.value.map(line => '<p>'+line+'</p>'));
-		return (
+  render() {
+    console.log(this.state.text);
+    return (
       <div>
         <p>{this.props.userId}</p>
-        <div contentEditable onChange={this.editorUpdated.bind(this)} onBlur={this.editorUpdated.bind(this)}>
-          {this.state.value.map(line => '<p>'+line+'</p>')}
-        </div>
+        <textarea
+          className="session-text-share"
+          onChange={this.editorUpdated} value={this.state.text}
+        ></textarea>
       </div>
     );
-	}
+  }
 }
-// {this.state.value.map(line => <p>{line}</p>)}
+
+ScreenShareView.propTypes = {
+  userId: React.PropTypes.string,
+};
 window.ScreenShareView = ScreenShareView;
-        // <input className="form-control"
-        // type="text"
-        // value={this.state.value}
-        // onChange={this.handleChange.bind(this)}
-        // />

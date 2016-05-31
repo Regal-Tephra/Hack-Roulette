@@ -15,7 +15,7 @@ class AppView extends React.Component {
     super(props);
 
     // Currently Hardcoded
-    this.userId = userIdOptions[Math.floor(Math.random()*userIdOptions.length)];
+    this.userId = userIdOptions[Math.floor(Math.random() * userIdOptions.length)];
     // this.handleChange = this.handleChange.bind(this);
 
     this.pages = {
@@ -26,7 +26,7 @@ class AppView extends React.Component {
     };
 
     this.state = {
-      currentPage: 'Mainpage',
+      currentPage: 'Session',
       navBarToggle: false,
     };
   }
