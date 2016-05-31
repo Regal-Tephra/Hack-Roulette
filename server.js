@@ -85,8 +85,14 @@ app.get('/auth/github/callback',
   handler.loggedInUser
 );
 
+app.get('/addUser', handler.isUser, (req, res) => {
+  handler.addUser(req.user.emails[0].value);
+  res.redirect('/');  
+});
+
 // logged in home page
 app.get('/', handler.isUser, () => {
+  // console.log('hello world, user is logged in as: ' + req.user.username);
   // res.send('hello world, user is logged in as: ' + req.user.username);
 });
 

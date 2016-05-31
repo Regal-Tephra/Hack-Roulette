@@ -4,7 +4,7 @@ var db = require('./data/db/config');
 var User = require('./data/db/models/user');
 
 exports.loggedInUser = function(req, res) {
-   res.redirect('/');
+   res.redirect('/addUser');
 };
 
 exports.logoutUser = function(req, res) {
@@ -27,3 +27,39 @@ exports.isUser = function(req, res, next) {
     res.redirect('/login');
   }
 };
+
+exports.addUser = function(email) {
+  User.find(function(err, userEmail) {
+    if(err) {
+      return console.error(err);
+    }
+
+    //if email isn't in database, add new User entry, else do nothing
+    if(userEmail.length === 0) {
+      //new user stored into a variable
+      var user = new User({
+        email: email
+      });
+      //save the new user into the DB
+      user.save(function(err, newUser) {
+        if(err) {
+          return console.error(err);
+        } else {
+          console.log(newUser.email + ' has been added.');
+        }
+      });
+    } else {
+      console.log('User email already exists.');
+    }
+  });
+};
+
+exports.wipeUserEntries = function() {
+  User.remove({}, function(err, users) {
+    if(err) {
+      console.error(err);
+    } else {
+      console.dir('Deleted all users.');
+    }
+  });
+}
