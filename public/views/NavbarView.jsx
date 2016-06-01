@@ -1,11 +1,18 @@
-/* global React */
+/* global
+  React
+  ReactRouter
+*/
+
+const Link = ReactRouter.Link;
 
 const NavbarView = (props) => {
+  // Logout should redirect
+
   const navBartext = 'NavBar ------------------------------------------';
   return (
     <div>
-     {navBartext}
-      <button>Log Out</button>
+      {navBartext}
+      <button><Link to="/login">Log Out</Link></button>
     </div>
   );
 };
