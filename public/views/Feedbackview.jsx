@@ -1,9 +1,16 @@
-/* global React NavbarView */
+/* global React ReactRouter NavbarView */
+
+const Link = ReactRouter.Link;
 
 const FeedbackView = (props) =>
-  <div>
+  (<div>
     <NavbarView />
-    <div> This is the feedback view</div>
-  </div>;
+    <div className="text-center">
+      <p> How was your experience? </p>
+      <input type="text"/>
+      <button><Link to="/">Submit Feedback</Link></button>
+    </div>
+  </div>
+  );
 
 window.FeedbackView = FeedbackView;
