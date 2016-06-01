@@ -13,6 +13,11 @@ const NavbarView = (props) => {
         <Link to="/login">Log Out
         </Link>
       </button>
+      
+      <button className="btn btn-default navbar-btn pull-right">
+        <Link to="/helper">Become a Helper
+        </Link>
+      </button>
     </nav>
   );
 };
