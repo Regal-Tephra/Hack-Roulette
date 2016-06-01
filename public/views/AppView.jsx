@@ -8,7 +8,14 @@
   LandingPageView
   ReactDOM
   io
+  ReactRouter
+  Router
+  Route
 */
+
+const Router = ReactRouter.Router;
+const Route = ReactRouter.Route;
+
 const userIdOptions = ['Greg', 'Thomas', 'Andy', 'Erika', 'Selena', 'Josh', 'William', 'Brittany'];
 class AppView extends React.Component {
   constructor(props) {
@@ -31,12 +38,17 @@ class AppView extends React.Component {
     };
   }
 
+  // {this.pages[this.state.currentPage]}
   // TODO: Build in navbar toggle
   render() {
     return (
       <div className="container">
         <div className="title">Hack Roulette</div>
-        {this.pages[this.state.currentPage]}
+        <Router>
+          <Route path="/" component={MainpageView} />
+          <Route path="/login" component={LandingPageView} />
+          <Route path="/AddUser" component={MainpageView} />
+        </Router>
       </div>
     );
   }
