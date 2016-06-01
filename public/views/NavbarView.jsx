@@ -6,9 +6,6 @@
 const Link = ReactRouter.Link;
 
 const NavbarView = (props) => {
-  // Logout should redirect
-
-  
   return (
     <nav className="navbar navbar-default">
       <p className="navbar-text">Hack Roulette</p>

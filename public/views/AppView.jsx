@@ -51,6 +51,9 @@ class AppView extends React.Component {
           <Route path="/screenshare" component={ScreenShareView} />
           <Route path="/feedback" component={FeedbackView} />
         </Router>
+        <footer className="footer container-fluid text-center">
+          <p className="col-lg-8">{"Made with <3"}</p>
+        </footer>
       </div>
     );
   }

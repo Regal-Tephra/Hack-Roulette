@@ -8,7 +8,7 @@ const FeedbackView = (props) =>
     <div className="text-center">
       <p> How was your experience? </p>
       <input type="text"/>
-      <button><Link to="/">Complete Session</Link></button>
+      <button><Link to="/">Submit Feedback</Link></button>
     </div>
   </div>
   );

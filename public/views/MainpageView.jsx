@@ -13,8 +13,9 @@ const MainpageView = (props) =>
     <div className="text-center" >
       Please Enter Your Why You Need Help and the Language
       <br></br>
-      <input></input><br></br>
-      <button><Link to="/screenshare">Submit</Link></button>
+      <input className="col-lg-offset-4" placeholder="e.g. get help including end queens!">
+      </input><br></br>
+      <button><Link to="/screenshare">Get Help Now!</Link></button>
     </div>
   </div>
   );
