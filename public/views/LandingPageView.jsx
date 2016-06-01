@@ -1,32 +1,18 @@
-class LandingPageView extends React.Component {
-    render() {
-    	return (
-        	<div>
-        		<h1>Landing Page View</h1>
-        		<Description />
-        	</div>
-        );
-    }
+/* global
+   React
+
+*/
+// class LandingPageView extends React.Component {
+
+function LandingPageView() {
+  const handleLogin = () => {
+    window.location = 'auth/github';
+  };
+  return (
+    <div className="login-button-wrapper">
+      <div className="login-button" onClick={handleLogin}>Login Here</div>
+    </div>
+  );
 }
 
-var Description = () => (
-	<div className='description'>
-		<Login />
-	</div>
-);
-
-class Login extends React.Component {
-    handleLogin() {
-        window.location = 'auth/github'
-    };
-
-
-    render() {
-        return (
-            <div className='login'>
-                <button className='loginbtn' onClick={this.handleLogin}>Login</button>
-            </div>
-        );
-    }
-}
 window.LandingPageView = LandingPageView;
