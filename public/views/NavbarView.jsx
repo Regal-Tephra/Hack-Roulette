@@ -8,12 +8,15 @@ const Link = ReactRouter.Link;
 const NavbarView = (props) => {
   // Logout should redirect
 
-  const navBartext = 'NavBar ------------------------------------------';
+  
   return (
-    <div>
-      {navBartext}
-      <button><Link to="/login">Log Out</Link></button>
-    </div>
+    <nav className="navbar navbar-default">
+      <p className="navbar-text">Hack Roulette</p>
+      <button className="btn btn-default navbar-btn pull-right">
+        <Link to="/login">Log Out
+        </Link>
+      </button>
+    </nav>
   );
 };
 

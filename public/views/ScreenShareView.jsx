@@ -3,6 +3,7 @@
    _
    io
    ReactRouter
+   NavbarView
    */
 
 const Link = ReactRouter.Link;
@@ -26,12 +27,15 @@ class ScreenShareView extends React.Component {
     console.log(this.state.text);
     return (
       <div>
-        <p>{this.props.userId}</p>
-        <textarea
-          className="session-text-share"
-          onChange={this.editorUpdated} value={this.state.text}
-        ></textarea>
-        <button><Link to='/feedback'>Complete Session</Link></button>
+        <NavbarView />
+        <div className="text-center">
+          <p>{this.props.userId}</p>
+          <textarea
+            className="session-text-share"
+            onChange={this.editorUpdated} value={this.state.text}
+          ></textarea>
+          <button><Link to="/feedback">Complete Session</Link></button>
+        </div>
       </div>
     );
   }
