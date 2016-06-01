@@ -48,6 +48,8 @@ class AppView extends React.Component {
           <Route path="/" component={MainpageView} />
           <Route path="/login" component={LandingPageView} />
           <Route path="/AddUser" component={MainpageView} />
+          <Route path="/screenshare" component={ScreenShareView} />
+          <Route path="/feedback" component={FeedbackView} />
         </Router>
       </div>
     );

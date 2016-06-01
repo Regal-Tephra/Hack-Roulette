@@ -2,7 +2,10 @@
   React
   NavbarView
   BodyView
+  ReactRouter
 */
+
+const Link = ReactRouter.Link;
 
 const MainpageView = (props) =>
   (<div>
@@ -11,7 +14,7 @@ const MainpageView = (props) =>
       Please Enter Your Why You Need Help and the Language
       <br></br>
       <input></input><br></br>
-      <button>Submit</button>
+      <button><Link to="/screenshare">Submit</Link></button>
     </div>
   </div>
   );

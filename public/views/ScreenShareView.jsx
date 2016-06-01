@@ -2,8 +2,10 @@
    React
    _
    io
+   ReactRouter
    */
 
+const Link = ReactRouter.Link;
 const socket = io();
 class ScreenShareView extends React.Component {
   constructor(props) {
@@ -29,6 +31,7 @@ class ScreenShareView extends React.Component {
           className="session-text-share"
           onChange={this.editorUpdated} value={this.state.text}
         ></textarea>
+        <button><Link to='/feedback'>Complete Session</Link></button>
       </div>
     );
   }
