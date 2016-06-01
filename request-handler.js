@@ -1,26 +1,25 @@
-var request = require('request');
+// const request = require('request');
 
-var db = require('./data/db/config');
-var User = require('./data/db/models/user');
+// const db = require('./data/db/config');
+const User = require('./data/db/models/user');
 
-exports.loggedInUser = function(req, res) {
-   res.redirect('/addUser');
+exports.loggedInUser = (req, res) => {
+  res.redirect('/addUser');
 };
 
-exports.logoutUser = function(req, res) {
+exports.logoutUser = (req, res) => {
   req.logout();
   res.redirect('/login');
 };
 
-exports.isLoggedIn = function(req){
-  if(req.user){
+exports.isLoggedIn = (req) => {
+  if (req.user) {
     return true;
-  } else {
-   return false;
   }
-}
+  return false;
+};
 
-exports.isUser = function(req, res, next) {
+exports.isUser = (req, res, next) => {
   if (exports.isLoggedIn(req)) {
     next();
   } else {
@@ -28,38 +27,38 @@ exports.isUser = function(req, res, next) {
   }
 };
 
-exports.addUser = function(email) {
-  User.find(function(err, userEmail) {
-    if(err) {
-      return console.error(err);
+exports.addUser = (email) => {
+  User.find((err, userEmail) => {
+    if (err) {
+      console.error(err);
+      return null;
     }
 
-    //if email isn't in database, add new User entry, else do nothing
-    if(userEmail.length === 0) {
-      //new user stored into a variable
-      var user = new User({
-        email: email
-      });
-      //save the new user into the DB
-      user.save(function(err, newUser) {
-        if(err) {
-          return console.error(err);
-        } else {
-          console.log(newUser.email + ' has been added.');
+    // if email isn't in database, add new User entry, else do nothing
+    if (userEmail.length === 0) {
+      // new user stored into a variable
+      const user = new User({ email });
+      // save the new user into the DB
+      user.save((saveErr, newUser) => {
+        if (err) {
+          console.error(saveErr);
+          return;
         }
+        console.log(`${newUser.email} has been added.`);
       });
     } else {
       console.log('User email already exists.');
     }
+    return null;
   });
 };
 
-exports.wipeUserEntries = function() {
-  User.remove({}, function(err, users) {
-    if(err) {
+exports.wipeUserEntries = () => {
+  User.remove({}, err => {
+    if (err) {
       console.error(err);
     } else {
       console.dir('Deleted all users.');
     }
   });
-}
+};

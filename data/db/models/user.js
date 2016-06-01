@@ -1,9 +1,10 @@
-var mongoose = require('mongoose');
 
-var userSchema = mongoose.Schema({
-	email: {type: String, required: true, index: { unique: true } }
+const mongoose = require('mongoose');
+
+const userSchema = mongoose.Schema({
+  email: { type: String, required: true, index: { unique: true } },
 });
 
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;
