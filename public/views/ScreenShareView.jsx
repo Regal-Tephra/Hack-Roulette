@@ -29,8 +29,7 @@ class ScreenShareView extends React.Component {
       console.log('This is what we get when a peer connects: ', options);
       that.refs.videoStream2.src = options.stream;
     });
-    comm.on('disconnect', function(options) {
-      // document.getElementById(options.callerID).remove();
+    comm.on('disconnect', () => {
       that.refs.videoStream2.src = '';
     });
   }
