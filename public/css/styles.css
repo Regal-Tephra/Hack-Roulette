@@ -58,6 +58,17 @@ html, body, .app {
     margin-right:-4px;
 }
 
+/* Video Code */
+.localVideo {
+  width: 200px;
+}
+
+.peerVideo {
+  position: absolute;
+  width: 200px;
+}
+
+
 /* Wrapper for page content to push down footer */
 .wrap {
   min-height: 100%;
