@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm run test -- --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "validate": "npm ls"
   },
   "babel": {
     "presets": [
@@ -60,8 +61,6 @@
     "underscore": "^1.8.3"
   },
   "pre-commit": [
-    "lint",
-    "validate",
-    "test"
+    "lint"
   ]
 }
