@@ -6,6 +6,7 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+// const Queue = require('./queue');
 
 const path = require('path');
 const handler = require('./request-handler');
@@ -16,6 +17,9 @@ const secrets = require('./keys.js');
 const sessionOptions = { secret: 'some other thing!?' };
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// create queue for helper messages
+const queue = [];
 
 // serialize and deserializeUser
 passport.serializeUser((user, done) => {
@@ -29,22 +33,35 @@ passport.deserializeUser((obj, done) => {
 app.use(session(sessionOptions));
 
 const clients = {};
-// need views to render this as script has to run on page load;
-io.on('connection', socket => {
-  console.log('connected', socket.id);
 
+// HelperView Socket Event Handlers
+const helperViewConnectionIO = socket => {
+  socket.on('queued', userId => {
+    console.log(userId);
+    clients[userId] = socket;
+    queue.push(userId);
+    console.log(queue);
+    socket.broadcast.emit('queueList', queue);
+  });
+
+  socket.on('initialGetQueueList', () => {
+    socket.broadcast.emit('queueList', queue);
+    console.log(queue);
+  });
+};
+
+
+// ScreenShareView Socket Event Handlers
+const screenShareViewConnectionIO = socket => {
   socket.on('change', text => {
     console.log(text);
     socket.broadcast.emit('text change', text);
-    // clients[1].emit('text change', text);
   });
   socket.on('connectUser', userId => {
     console.log(userId);
     clients[userId] = socket;
     console.log('  Clients:', Object.keys(clients));
-    // socket.userId = userId;
   });
-
   socket.on('disconnect', () => {
     _.each(clients, (clientSocket, userId) => {
       if (clientSocket === socket) {
@@ -53,6 +70,17 @@ io.on('connection', socket => {
       }
     });
     console.log('  Clients:', Object.keys(clients));
+  });
+};
+
+// need views to render this as script has to run on page load;
+io.on('connection', socket => {
+  console.log('connected', socket.id);
+
+  socket.on('initializeConnection', connectionType => {
+    console.log('Initializing Connection', connectionType);
+    if (connectionType === 'HelperView') helperViewConnectionIO(socket);
+    else if (connectionType === 'ScreenShareView') screenShareViewConnectionIO(socket);
   });
 });
 
@@ -87,7 +115,7 @@ app.get('/auth/github/callback',
 
 app.get('/addUser', handler.isUser, (req, res) => {
   handler.addUser(req.user.emails[0].value);
-  res.redirect('/');  
+  res.redirect('/');
 });
 
 // logged in home page

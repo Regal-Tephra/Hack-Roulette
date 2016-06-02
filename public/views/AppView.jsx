@@ -2,6 +2,7 @@
   LoggedinView
   FeedbackView
   MainpageView
+  HelperView
   React
   NavbarView
   ScreenShareView
@@ -29,12 +30,12 @@ class AppView extends React.Component {
     // Currently Hardcoded
     this.userId = userIdOptions[Math.floor(Math.random() * userIdOptions.length)];
     // this.handleChange = this.handleChange.bind(this);
-
     this.pages = {
       Landingpage: <LandingPageView />,
-      Mainpage: <MainpageView />,
+      Mainpage: <MainpageView userId={this.userId} />,
       Session: <ScreenShareView userId={this.userId} />,
       Feedback: <FeedbackView />,
+      Helper: <HelperView />,
     };
   }
 
@@ -50,6 +51,7 @@ class AppView extends React.Component {
           <Route path="/AddUser" component={MainpageView} />
           <Route path="/screenshare" component={ScreenShareView} />
           <Route path="/feedback" component={FeedbackView} />
+          <Route path="/helper" component={HelperView} />
         </Router>
         <footer className="footer container-fluid text-center">
           <p className="col-lg-8">{"Made with <3"}</p>
