@@ -30,15 +30,18 @@ class MainpageView extends React.Component {
       queueStatus: false,
       requestText: '',
     };
+    // emit the correct listener for mainpageview here when created
+    // socket.emit('initializeConnection', 'HelperView');
     this.updateRequestText = this.updateRequestText.bind(this);
     this.sendRequestText = this.sendRequestText.bind(this);
   }
 
   sendRequestText(e) {
     e.preventDefault();
-    socket.emit('queued', this.state.requestText);
     console.log('Emitting', this.state.requestText);
-    this.setState({requestText: ''});
+    socket.emit('queued', this.state.requestText);
+    document.getElementById('text').value = '';
+    this.setState({ requestText: '' });
   }
 
   updateRequestText(e) {
@@ -54,13 +57,14 @@ class MainpageView extends React.Component {
             Please Enter Your Why You Need Help and the Language
             <br></br>
             <textarea
+              id="text"
               className="col-lg-offset-4"
               placeholder="e.g. looking for help with n-queens!"
               rows="4"
               cols="49"
               onChange={this.updateRequestText}
             ></textarea><br></br>
-            <input type="submit" onClick={this.sendRequestText} value="Get Help Now!" />
+            <input type="submit" onClick={this.sendRequestText} value="Get Help Now!"/>
           </div>
         </form>
       </div>

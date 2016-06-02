@@ -36,11 +36,12 @@ const clients = {};
 
 // HelperView Socket Event Handlers
 const helperViewConnectionIO = socket => {
+  console.log('Initializing helperView listener');
   socket.on('queued', userId => {
-    console.log(userId);
+    console.log('userID queued:', userId);
     clients[userId] = socket;
     queue.push(userId);
-    console.log(queue);
+    console.log('queue:', queue);
     socket.broadcast.emit('queueList', queue);
   });
 
@@ -81,6 +82,7 @@ io.on('connection', socket => {
     console.log('Initializing Connection', connectionType);
     if (connectionType === 'HelperView') helperViewConnectionIO(socket);
     else if (connectionType === 'ScreenShareView') screenShareViewConnectionIO(socket);
+    // else if (connectionType === 'MainView') mainViewConnectionIO(socket);
   });
 });
 
