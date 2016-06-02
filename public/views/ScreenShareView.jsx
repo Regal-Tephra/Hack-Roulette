@@ -1,11 +1,14 @@
 /* global
    React
    _
-   io
    ReactRouter
    NavbarView
+   Icecomm
+   localVideo
    */
 
+// Need to remove API Key. 
+const comm = new Icecomm('vtygIA1vTxzSy5zkUnO0ZJvEosIUwWYoEQc1kttEN6qWvNWp1S');
 const Link = ReactRouter.Link;
 const socket = io();
 class ScreenShareView extends React.Component {
@@ -18,7 +21,28 @@ class ScreenShareView extends React.Component {
       this.setState({ text });
     });
     socket.emit('connectUser', this.props.userId);
+   
+    // Icecomm Video Chat. In the future, we can decide which room each person joins.
+    comm.connect('my_room');
+    const that = this;
+
+    // Connecting local stream
+    comm.on('local', (options) => {
+      that.refs.videoStream1.src = options.stream;
+    });
+
+    // Connecting remote stream
+    comm.on('connected', (options) => {
+      console.log('This is what we get when a peer connects: ', options);
+      that.refs.videoStream2.src = options.stream;
+    });
+
+    // Remove peer stream when disconnected
+    comm.on('disconnect', () => {
+      that.refs.videoStream2.src = '';
+    });
   }
+
   editorUpdated(event) {
     const text = event.target.value;
     this.setState({ text });
@@ -36,6 +60,8 @@ class ScreenShareView extends React.Component {
             onChange={this.editorUpdated} value={this.state.text}
           ></textarea>
           <button><Link to="/feedback">Complete Session</Link></button>
+          <video className="localVideo" ref="videoStream1" autoPlay></video>
+          <video className="peerVideo" ref="videoStream2" autoPlay></video>
         </div>
       </div>
     );
