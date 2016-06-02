@@ -30,13 +30,13 @@ class AppView extends React.Component {
     // Currently Hardcoded
     this.userId = userIdOptions[Math.floor(Math.random() * userIdOptions.length)];
     // this.handleChange = this.handleChange.bind(this);
-    this.pages = {
-      Landingpage: <LandingPageView />,
-      Mainpage: <MainpageView userId={this.userId} />,
-      Session: <ScreenShareView userId={this.userId} />,
-      Feedback: <FeedbackView />,
-      Helper: <HelperView />,
-    };
+    // this.pages = {
+    //   Landingpage: <LandingPageView />,
+    //   Mainpage: <MainpageView userId={this.userId} />,
+    //   Session: <ScreenShareView userId={this.userId} />,
+    //   Feedback: <FeedbackView />,
+    //   Helper: <HelperView />,
+    // };
   }
 
   // {this.pages[this.state.currentPage]}

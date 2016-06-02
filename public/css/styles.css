@@ -48,7 +48,9 @@ html, body, .app {
   text-align: center;
 }
 .session-text-share {
-  width: 100%;
+  max-width: 100%; 
+  min-height: 400px;
+  width: 100%; 
 }
 
 .col-lg-4, .col-lg-8 {
@@ -60,14 +62,22 @@ html, body, .app {
 
 /* Video Code */
 .localVideo {
-  width: 200px;
+  position: absolute;
+  right: 20px;
+  bottom: 5px;
+  width: 100px;
+  height: 100px;
+  background-color: black;
 }
 
 .peerVideo {
-  position: absolute;
-  width: 200px;
+  position: relative;
+  /*min-width: 100%; min-height: 100%;*/
+  /*width: auto; height: auto; z-index: -100;*/
+  width: 100%;
+  height: 400px;
+  background-color: grey;
 }
-
 
 /* Wrapper for page content to push down footer */
 .wrap {
