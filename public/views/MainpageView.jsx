@@ -58,7 +58,7 @@ class MainpageView extends React.Component {
             <br></br>
             <textarea
               id="text"
-              className="col-lg-offset-4"
+              className="col-lg"
               placeholder="e.g. looking for help with n-queens!"
               rows="4"
               cols="49"
