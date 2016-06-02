@@ -6,6 +6,7 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+const Queue = require('./queue');
 
 const path = require('path');
 const handler = require('./request-handler');
@@ -43,6 +44,19 @@ io.on('connection', socket => {
     clients[userId] = socket;
     console.log('  Clients:', Object.keys(clients));
     // socket.userId = userId;
+  });
+
+  socket.on('queued', userId => {
+    console.log(userId);
+    clients[userId] = socket;
+    Queue.enqueue(userId);
+    console.log(Queue);
+    socket.broadcast.emit('queueList', Queue.storage);
+  });
+
+  socket.on('initialGetQueueList', () => {
+    socket.broadcast.emit('queueList', Queue.storage);
+    console.log(Queue.storage);
   });
 
   socket.on('disconnect', () => {
