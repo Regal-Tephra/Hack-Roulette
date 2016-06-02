@@ -16,16 +16,12 @@ class HelperView extends React.Component {
       connected: false,
       list: [],
     };
-  }
-  componentWillMount() {
-    // socket.emit('initialGetQueueList');
     socket.emit('initializeConnection', 'HelperView');
-
+    socket.emit('initialGetQueueList');
     socket.on('queueList', queueListArray => {
       console.log(queueListArray);
       this.setState({ list: queueListArray });
     });
-    // this.setState({list: 'setstate'})
   }
 // TRY TO PRINT QUEUELISTARRAY DOWN THERE
   render() {
