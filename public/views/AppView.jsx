@@ -2,6 +2,7 @@
   LoggedinView
   FeedbackView
   MainpageView
+  HelperView
   React
   NavbarView
   ScreenShareView
@@ -34,7 +35,7 @@ class AppView extends React.Component {
       Mainpage: <MainpageView userId={this.userId} />,
       Session: <ScreenShareView userId={this.userId} />,
       Feedback: <FeedbackView />,
-      Helper: <HelperView />
+      Helper: <HelperView />,
     };
   }
 
