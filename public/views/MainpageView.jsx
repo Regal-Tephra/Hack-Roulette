@@ -3,9 +3,10 @@
   NavbarView
   BodyView
   ReactRouter
+  io
 */
 
-const Link = ReactRouter.Link;
+// const Link = ReactRouter.Link;
 
 // const MainpageView = (props) =>
 //   (<div>
@@ -25,25 +26,43 @@ const socket = io();
 class MainpageView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { queueStatus: false };
+    this.state = {
+      queueStatus: false,
+      requestText: '',
+    };
+    this.updateRequestText = this.updateRequestText.bind(this);
+    this.sendRequestText = this.sendRequestText.bind(this);
   }
 
-  queued(event) {
-    socket.emit('queued', 'Insert User ID Here');
-    console.log('Emitting!!!');
+  sendRequestText(e) {
+    e.preventDefault();
+    socket.emit('queued', this.state.requestText);
+    console.log('Emitting', this.state.requestText);
+    this.setState({requestText: ''});
+  }
+
+  updateRequestText(e) {
+    this.setState({ requestText: e.target.value });
   }
 
   render() {
     return (
       <div>
         <NavbarView />
-        <div className="text-center" >
-          Please Enter Your Why You Need Help and the Language
-          <br></br>
-          <input className="col-lg-offset-4" placeholder="e.g. get help including end queens!">
-          </input><br></br>
-          <button onClick={this.queued}>Get Help Now!</button>
-        </div>
+        <form>
+          <div className="text-center" >
+            Please Enter Your Why You Need Help and the Language
+            <br></br>
+            <textarea
+              className="col-lg-offset-4"
+              placeholder="e.g. looking for help with n-queens!"
+              rows="4"
+              cols="49"
+              onChange={this.updateRequestText}
+            ></textarea><br></br>
+            <input type="submit" onClick={this.sendRequestText} value="Get Help Now!" />
+          </div>
+        </form>
       </div>
   );
   }

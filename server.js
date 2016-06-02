@@ -33,22 +33,9 @@ passport.deserializeUser((obj, done) => {
 app.use(session(sessionOptions));
 
 const clients = {};
-// need views to render this as script has to run on page load;
-io.on('connection', socket => {
-  console.log('connected', socket.id);
 
-  socket.on('change', text => {
-    console.log(text);
-    socket.broadcast.emit('text change', text);
-    // clients[1].emit('text change', text);
-  });
-  socket.on('connectUser', userId => {
-    console.log(userId);
-    clients[userId] = socket;
-    console.log('  Clients:', Object.keys(clients));
-    // socket.userId = userId;
-  });
-
+// HelperView Socket Event Handlers
+const helperViewConnectionIO = socket => {
   socket.on('queued', userId => {
     console.log(userId);
     clients[userId] = socket;
@@ -61,7 +48,20 @@ io.on('connection', socket => {
     socket.broadcast.emit('queueList', queue);
     console.log(queue);
   });
+};
 
+
+// ScreenShareView Socket Event Handlers
+const screenShareViewConnectionIO = socket => {
+  socket.on('change', text => {
+    console.log(text);
+    socket.broadcast.emit('text change', text);
+  });
+  socket.on('connectUser', userId => {
+    console.log(userId);
+    clients[userId] = socket;
+    console.log('  Clients:', Object.keys(clients));
+  });
   socket.on('disconnect', () => {
     _.each(clients, (clientSocket, userId) => {
       if (clientSocket === socket) {
@@ -70,6 +70,17 @@ io.on('connection', socket => {
       }
     });
     console.log('  Clients:', Object.keys(clients));
+  });
+};
+
+// need views to render this as script has to run on page load;
+io.on('connection', socket => {
+  console.log('connected', socket.id);
+
+  socket.on('initializeConnection', connectionType => {
+    console.log('Initializing Connection', connectionType);
+    if (connectionType === 'HelperView') helperViewConnectionIO(socket);
+    else if (connectionType === 'ScreenShareView') screenShareViewConnectionIO(socket);
   });
 });
 

@@ -18,7 +18,8 @@ class HelperView extends React.Component {
     };
   }
   componentWillMount() {
-    socket.emit('initialGetQueueList');
+    // socket.emit('initialGetQueueList');
+    socket.emit('initializeConnection', 'HelperView');
 
     socket.on('queueList', queueListArray => {
       console.log(queueListArray);
