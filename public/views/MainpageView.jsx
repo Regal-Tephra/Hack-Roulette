@@ -31,7 +31,7 @@ class MainpageView extends React.Component {
       requestText: '',
     };
     // emit the correct listener for mainpageview here when created
-    // socket.emit('initializeConnection', 'HelperView');
+    socket.emit('initializeConnection', 'HelpRequests');
     this.updateRequestText = this.updateRequestText.bind(this);
     this.sendRequestText = this.sendRequestText.bind(this);
   }
