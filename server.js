@@ -10,6 +10,8 @@ const io = require('socket.io')(server);
 
 const path = require('path');
 const handler = require('./request-handler');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 const passport = require('passport');
 const GitHubStrategy = require('passport-github2').Strategy;
@@ -17,6 +19,11 @@ const secrets = require('./keys.js');
 const sessionOptions = { secret: 'some other thing!?' };
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Middleware
+app.use(morgan('combined'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // create queue for helper messages
 const queue = [];
@@ -129,6 +136,14 @@ app.get('/', handler.isUser, () => {
 // landing page
 app.get('/login', (req, res) => {
   res.send('login page');
+});
+
+// landing page
+app.post('/feedback', (req, res) => {
+  // TODO: Add feedback into the server
+  console.log('Got stuff from feedback!');
+  console.log(req.body);
+  res.status(200).json('Woo');
 });
 
 // logout request

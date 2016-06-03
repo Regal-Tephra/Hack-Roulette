@@ -62,6 +62,7 @@ class ScreenShareView extends React.Component {
     this.setState({ text });
     socket.emit('change', text);
   }
+
   render() {
     console.log(this.state.text);
     return (

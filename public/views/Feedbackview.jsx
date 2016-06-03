@@ -1,4 +1,4 @@
-/* global React ReactRouter NavbarView io */
+/* global React ReactRouter NavbarView io $ */
 
 const Link = ReactRouter.Link;
 
@@ -7,7 +7,7 @@ const Link = ReactRouter.Link;
 class FeedbackView extends React.Component {
   constructor(props) {
     super(props);
-
+    this.feedbackUrl = '/feedback';
     this.handleRatingClick = this.handleRatingClick.bind(this);
     this.handleFeedbackText = this.handleFeedbackText.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,21 +33,49 @@ class FeedbackView extends React.Component {
     this.setState({ feedbackText: e.target.value });
   }
 
-  handleSubmit() {
-    // Handle submit. Send ajax request to server.. or emit through sockets?
-      // TODO Send data back to the server
-      // As well as the data about the feedback and rating,
-        // we also have to associate it with a session ID and Users
-    this.setState({
-      rating: '',
-      feedbackText: '',
+  handleSubmit(e) {
+    e.preventDefault();
+    const formData = {
+      // TODO: Need to grab user information
+      user: '',
+      // TODO: Need to grab session ID information
+      sessionID: '',
+      rating: this.state.rating,
+      feedbackText: this.state.feedbackText,
+    };
+    $.ajax({
+      url: '/feedback',
+      dataType: 'json',
+      type: 'POST',
+      data: formData,
+      success: function (data) {
+        console.log('Successful Post!', data);
+        this.setState({
+          rating: '',
+          feedbackText: '',
+        });
+        // TODO Uncheck all the boxes
+        // TODO: This method actually isn't changing the page itself
+        ReactRouter.browserHistory.push('/');
+      }.bind(this),
+      error: (err) => {
+        console.log('Woo we got an error');
+        console.log(err);
+        console.error(err.toString());
+        this.setState({
+          rating: '',
+          feedbackText: '',
+        });
+        ReactRouter.browserHistory.push('/');
+      },
     });
   }
 
+  // TODO: Instead of manually typing out all the rows, I could have done a map function
   render() {
     return (<div>
       <NavbarView />
-      <div className="text-center">
+      <form className="text-center" onSubmit={this.handleSubmit}>
         <div>
           <p> How would you rate your experience out of 5? </p>
           <label className="radio-inline">
@@ -108,8 +136,8 @@ class FeedbackView extends React.Component {
             onChange={this.handleFeedbackText}
           ></textarea><br />
         </div>
-        <button><Link to="/">Submit Feedback</Link></button>
-      </div>
+        <button type="submit">Submit Feedback</button>
+      </form>
     </div>
     );
   }
