@@ -15,7 +15,7 @@
 
 
 // Need to remove API Key.
-const comm = new Icecomm('vtygIA1vTxzSy5zkUnO0ZJvEosIUwWYoEQc1kttEN6qWvNWp1S');
+const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
 const Link = ReactRouter.Link;
 const socket = io();
 class ScreenShareView extends React.Component {
@@ -30,19 +30,20 @@ class ScreenShareView extends React.Component {
     socket.emit('connectUser', this.props.userId);
 
     // Icecomm Video Chat. In the future, we can decide which room each person joins.
-    // comm.connect('my_room');
+    comm.connect('my_room', { audio: true });
     const that = this;
 
     // Connecting local stream
-    comm.on('local', (options) => {
+    comm.on('local', (local) => {
       console.log('Connected to Local!');
-      that.refs.videoStream1.src = options.stream;
+      that.refs.localStream1.src = local.stream;
     });
 
     // Connecting remote stream
-    comm.on('connected', (options) => {
-      console.log('This is what we get when a peer connects: ', options);
-      that.refs.videoStream2.src = options.stream;
+    comm.on('connected', (peer) => {
+      console.log('This is what we get when a peer connects: ', peer);
+      that.refs.peerStream2.src = peer.stream;
+      that.refs.peerStream2.src.id = peer.ID;
     });
 
     // Remove peer stream when disconnected
@@ -77,8 +78,8 @@ class ScreenShareView extends React.Component {
         <div className="col-md-6">
           <div className="text-center bg-primary">Video Chat</div>
           <div>
-            <video className="peerVideo col-md-3" ref="videoStream2" autoPlay></video>
-            <video className="localVideo" ref="videoStream1" autoPlay></video>
+            <video className="peerVideo col-md-3" ref="peerStream2" autoPlay></video>
+            <video className="localVideo" ref="localStream1" autoPlay></video>
           </div>
         </div>
         <div>
