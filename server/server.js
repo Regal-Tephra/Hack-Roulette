@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
-const sharedSession = require('express-socket.io-session');
+// const sharedSession = require('express-socket.io-session');
 
 app.use(express.static(`${__dirname}/../public`));  // Static pages
 app.use(morgan('combined')); // logging
