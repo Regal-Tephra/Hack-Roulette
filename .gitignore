@@ -1,4 +1,4 @@
 node_modules/
 public/components
 .DS_Store
-server/keys.js
+keys.js
