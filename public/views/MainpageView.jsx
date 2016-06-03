@@ -64,7 +64,7 @@ class MainpageView extends React.Component {
               cols="49"
               onChange={this.updateRequestText}
             ></textarea><br></br>
-            <input type="submit" onClick={this.sendRequestText} value="Get Help Now!"/>
+            <input type="submit" onClick={this.sendRequestText} value="Get Help Now!" />
           </div>
         </form>
       </div>
