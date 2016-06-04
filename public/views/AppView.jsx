@@ -16,10 +16,6 @@
 
 const Router = ReactRouter.Router;
 const Route = ReactRouter.Route;
-<<<<<<< HEAD
-=======
-const userIdOptions = ['Greg', 'Thomas', 'Andy', 'Erika', 'Selena', 'Josh', 'William', 'Brittany'];
->>>>>>> d67366e1b2e656f3d91293af050e40af0fb22b9e
 class AppView extends React.Component {
   constructor(props) {
     super(props);
@@ -35,15 +31,11 @@ class AppView extends React.Component {
     this.checkLogin();
   }
 
-<<<<<<< HEAD
   handleMainSubmit(data) {
     // WE ARE GOOD HERE
     this.setState({ sessionData: data });
     this.forceUpdate();
   }
-
-=======
->>>>>>> d67366e1b2e656f3d91293af050e40af0fb22b9e
   checkLogin() {
     $.ajax({
       url: '/loginCheck',
@@ -62,12 +54,6 @@ class AppView extends React.Component {
         this.forceUpdate();
       },
     });
-  }
-
-  handleMainSubmit(data) {
-    // WE ARE GOOD HERE
-    this.setState({ sessionData: data });
-    this.forceUpdate();
   }
 
   handleLogin() {
