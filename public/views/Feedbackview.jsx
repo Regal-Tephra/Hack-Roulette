@@ -15,7 +15,9 @@ class FeedbackView extends React.Component {
     this.state = {
       rating: '',
       feedbackText: '',
+      userData: this.props.userData,
     };
+    console.log('Feedback userdata: ', this.props.userData)
   }
 
   componentDidUpdate() {
@@ -142,4 +144,8 @@ class FeedbackView extends React.Component {
     );
   }
 }
+
+FeedbackView.propTypes = {
+  userData: React.PropTypes.object.isRequired,
+};
 window.FeedbackView = FeedbackView;

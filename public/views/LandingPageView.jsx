@@ -4,13 +4,11 @@
 */
 // class LandingPageView extends React.Component {
 
-function LandingPageView() {
-  const handleLogin = () => {
-    window.location = 'auth/github';
-  };
+function LandingPageView(props) {
+  console.log(props);
   return (
     <div className="login-button-wrapper">
-      <div className="login-button" onClick={handleLogin}>Login Here</div>
+      <div className="login-button" onClick={props.handleLogin}>Login Here</div>
     </div>
   );
 }
