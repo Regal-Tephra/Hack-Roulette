@@ -21,7 +21,7 @@ const socket = io();
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { text: '', showVideo: true };
     this.editorUpdated = this.editorUpdated.bind(this);
     socket.emit('initializeConnection', 'ScreenShareView');
     socket.on('text change', text => {
@@ -30,7 +30,6 @@ class ScreenShareView extends React.Component {
     socket.emit('connectUser', this.props.userId);
 
     // Icecomm Video Chat. In the future, we can decide which room each person joins.
-    comm.connect('my_room', { audio: true });
     const that = this;
 
     // Connecting local stream
@@ -46,15 +45,13 @@ class ScreenShareView extends React.Component {
       that.refs.peerStream2.src.id = peer.ID;
     });
 
+    comm.connect('my_room', { audio: true });
     // Remove peer stream when disconnected
     comm.on('disconnect', () => {
       that.refs.videoStream1.src = '';
       that.refs.videoStream2.src = '';
       comm.close();
     });
-
-
-    // TODO: Shut off Video when page changes
   }
 
   editorUpdated(event) {
@@ -63,11 +60,17 @@ class ScreenShareView extends React.Component {
     socket.emit('change', text);
   }
 
+  handleVideo() {
+    // comm.leave(true);
+    console.log(comm);
+    comm.close();
+  }
+
   render() {
     console.log(this.state.text);
     return (
       <div>
-        <NavbarView />
+        <NavbarView videoHandler={this.handleVideo} />
         <div className="col-md-6">
           <div className="text-center bg-primary">Shared Text Editor</div>
           <p>{this.props.userId}</p>
@@ -100,3 +103,4 @@ ScreenShareView.propTypes = {
   userId: React.PropTypes.string,
 };
 window.ScreenShareView = ScreenShareView;
+// videoHandler={this.handleVideo.bind(this)}
