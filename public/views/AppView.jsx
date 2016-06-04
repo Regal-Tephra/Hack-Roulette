@@ -17,39 +17,37 @@
 const Router = ReactRouter.Router;
 const Route = ReactRouter.Route;
 
-const userIdOptions = ['Greg', 'Thomas', 'Andy', 'Erika', 'Selena', 'Josh', 'William', 'Brittany'];
 class AppView extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      currentPage: 'Landingpage',
-      navBarToggle: false,
-    };
+    this.handleMainSubmit = this.handleMainSubmit.bind(this);
 
-    // Currently Hardcoded
-    this.userId = userIdOptions[Math.floor(Math.random() * userIdOptions.length)];
-    // this.handleChange = this.handleChange.bind(this);
-    // this.pages = {
-    //   Landingpage: <LandingPageView />,
-    //   Mainpage: <MainpageView userId={this.userId} />,
-    //   Session: <ScreenShareView userId={this.userId} />,
-    //   Feedback: <FeedbackView />,
-    //   Helper: <HelperView />,
-    // };
+    // State will control ScreenShareView's render
+    this.state = {
+      sessionData: {},
+    };
   }
 
-  // {this.pages[this.state.currentPage]}
-  // TODO: Build in navbar toggle
+  handleMainSubmit(data) {
+    // WE ARE GOOD HERE
+    this.setState({ sessionData: data });
+    this.forceUpdate();
+  }
+
   render() {
+    const ScreenShareViewWrap = () => {
+      return (
+        <ScreenShareView sessionData={this.state.sessionData} />
+      );
+    };
     return (
       <div className="container">
         <div className="title">Hack Roulette</div>
         <Router>
-          <Route path="/" component={MainpageView} />
+          <Route path="/" component={MainpageView} onMainSubmit={this.handleMainSubmit} />
           <Route path="/login" component={LandingPageView} />
-          <Route path="/AddUser" component={MainpageView} />
-          <Route path="/screenshare" component={ScreenShareView} />
+          <Route path="/screenshare" component={ScreenShareViewWrap} sessionData={this.state.sessionData} />
           <Route path="/feedback" component={FeedbackView} />
           <Route path="/helper" component={HelperView} />
         </Router>
@@ -60,6 +58,9 @@ class AppView extends React.Component {
     );
   }
 }
+
+// ScreenShareView Wrapper to Include PROPS
+
 
 ReactDOM.render(<AppView />, document.getElementById('app'));
 window.AppView = AppView;
