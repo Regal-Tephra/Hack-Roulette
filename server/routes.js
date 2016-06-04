@@ -11,12 +11,17 @@ module.exports = (app, passport, handler) => {
     handler.addUser(req.user.emails[0].value);
     res.redirect('/');
   });
-  app.get('/', handler.isUser, () => {
+  app.get('/loginCheck', (req, res) => {
+    console.log(req.user);
+    let data = '';
+    req.on('data', d => {
+      data = d + data;
+    });
+    req.on('end', () => {
+      res.end(JSON.stringify(req.user));
+    });
     // console.log('hello world, user is logged in as: ' + req.user.username);
     // res.send('hello world, user is logged in as: ' + req.user.username);
-  });
-  app.get('/login', (req, res) => {
-    res.send('login page');
   });
   app.post('/feedback', (req, res) => {
     // TODO: Add feedback into the server
