@@ -47,7 +47,7 @@ class AppView extends React.Component {
         <Router>
           <Route path="/" component={MainpageView} onMainSubmit={this.handleMainSubmit} />
           <Route path="/login" component={LandingPageView} />
-          <Route path="/screenshare" component={ScreenShareViewWrap} sessionData={this.state.sessionData} />
+          <Route path="/screenshare" component={ScreenShareViewWrap} />
           <Route path="/feedback" component={FeedbackView} />
           <Route path="/helper" component={HelperView} />
         </Router>
