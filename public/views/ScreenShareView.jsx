@@ -21,7 +21,17 @@ const socket = io();
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { text: '', showVideo: true };
+
+    console.log('This is props', this.props);
+    console.log('This is sessionData', this.props.sessionData);
+
+    this.state = {
+      text: '',
+      user1: this.props.sessionData.client1ID,
+      user2: this.props.sessionData.client2ID,
+      showVideo: true,
+    };
+
     this.editorUpdated = this.editorUpdated.bind(this);
     socket.emit('initializeConnection', 'ScreenShareView');
     socket.on('text change', text => {
@@ -72,8 +82,7 @@ class ScreenShareView extends React.Component {
       <div>
         <NavbarView videoHandler={this.handleVideo} />
         <div className="col-md-6">
-          <div className="text-center bg-primary">Shared Text Editor</div>
-          <p>{this.props.userId}</p>
+          <div className="text-center bg-primary">Shared Text Editor {this.state.user1} && {this.state.user2}</div>
           <textarea
             className="session-text-share"
             onChange={this.editorUpdated} value={this.state.text}
@@ -100,7 +109,7 @@ class ScreenShareView extends React.Component {
 }
 
 ScreenShareView.propTypes = {
-  userId: React.PropTypes.string,
+  sessionData: React.PropTypes.object.isRequired,
 };
 window.ScreenShareView = ScreenShareView;
 // videoHandler={this.handleVideo.bind(this)}

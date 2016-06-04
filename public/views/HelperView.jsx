@@ -8,6 +8,8 @@
 
 // const Link = ReactRouter.Link;
 
+// BUG: Currently does not dynamically update list of requests
+
 const socket = io();
 class HelperView extends React.Component {
   constructor(props) {
@@ -23,6 +25,12 @@ class HelperView extends React.Component {
       this.setState({ list: queueListArray });
     });
   }
+
+// JOIN HELP REQUEST ROOM
+  // STEP 1: Click interested Room
+  // STEP 2: Wait for data about new room
+  // STEP 3: REDIRECT TO ROOM
+
 // TRY TO PRINT QUEUELISTARRAY DOWN THERE
   render() {
     return (

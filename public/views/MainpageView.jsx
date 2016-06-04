@@ -8,25 +8,20 @@
 
 // const Link = ReactRouter.Link;
 
-// const MainpageView = (props) =>
-//   (<div>
-//     <NavbarView />
-//     <div className="text-center" >
-//       Please Enter Your Why You Need Help and the Language
-//       <br></br>
-//       <input className="col-lg-offset-4" placeholder="e.g. get help including end queens!">
-//       </input><br></br>
-//       <button><Link to="/screenshare">Get Help Now!</Link></button>
-//     </div>
-//   </div>
-//   );
+// TODOS:
+  // Show Loading Page after CLIENT1 presses "Submit button"
+  // Send over Client1 userID information
+  // When the server finishes loading or finds a match, send to
+    // the screenshare page
 
 
 const socket = io();
 class MainpageView extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
+      loaded: false,
       queueStatus: false,
       requestText: '',
     };
@@ -36,12 +31,28 @@ class MainpageView extends React.Component {
     this.sendRequestText = this.sendRequestText.bind(this);
   }
 
+  // TODO: Need to show loading page
+  // PSEUDOCODE:
+    // Step 1: Emit to Server and Show Loading View
+    // Step 2: Wait for response from server (callback/promise)
+    // Step 3: Turn off loading view and redirect when data is received
   sendRequestText(e) {
     e.preventDefault();
+
+    const messageSent = {
+      client1sessionID: socket.io.engine.id,
+      requestText: this.state.requestText,
+    };
+
+    // Emit to Server and Show Loading View
     console.log('Emitting', this.state.requestText);
-    socket.emit('queued', this.state.requestText);
     document.getElementById('text').value = '';
-    this.setState({ requestText: '' });
+    this.setState({ requestText: '', loaded: true });
+    socket.emit('queued', messageSent, data => {
+      this.setState({ loaded: false });
+      this.props.route.onMainSubmit(data);
+      this.props.history.push('/screenshare');
+    });
   }
 
   updateRequestText(e) {
@@ -49,6 +60,10 @@ class MainpageView extends React.Component {
   }
 
   render() {
+    const loading = this.state.loaded ?
+      <div>We are matching you with somebody!</div> :
+      <div></div>;
+
     return (
       <div>
         <NavbarView />
@@ -67,9 +82,15 @@ class MainpageView extends React.Component {
             <input type="submit" onClick={this.sendRequestText} value="Get Help Now!" />
           </div>
         </form>
+        {loading}
       </div>
   );
   }
 }
+
+MainpageView.propTypes = {
+  route: React.PropTypes,
+  history: React.PropTypes,
+};
 
 window.MainpageView = MainpageView;
