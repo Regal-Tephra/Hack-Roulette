@@ -30,8 +30,9 @@ class ScreenShareView extends React.Component {
       user1: this.props.sessionData.client1ID,
       user2: this.props.sessionData.client2ID,
       showVideo: true,
+      userData: this.props.userData,
     };
-
+    console.log('Screenshare userdata: ', this.props.userData);
     this.editorUpdated = this.editorUpdated.bind(this);
     socket.emit('initializeConnection', 'ScreenShareView');
     socket.on('text change', text => {
@@ -110,6 +111,7 @@ class ScreenShareView extends React.Component {
 
 ScreenShareView.propTypes = {
   sessionData: React.PropTypes.object.isRequired,
+  userData: React.PropTypes.object.isRequired,
 };
 window.ScreenShareView = ScreenShareView;
 // videoHandler={this.handleVideo.bind(this)}

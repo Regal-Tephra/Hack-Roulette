@@ -16,22 +16,40 @@
 
 const Router = ReactRouter.Router;
 const Route = ReactRouter.Route;
-<<<<<<< HEAD
-
-=======
 const userIdOptions = ['Greg', 'Thomas', 'Andy', 'Erika', 'Selena', 'Josh', 'William', 'Brittany'];
->>>>>>> When commited adds client side user logic
 class AppView extends React.Component {
   constructor(props) {
     super(props);
 
     this.handleMainSubmit = this.handleMainSubmit.bind(this);
+    this.requireAuth = this.requireAuth.bind(this);
 
     // State will control ScreenShareView's render
     this.state = {
       sessionData: {},
+      userData: {},
     };
-<<<<<<< HEAD
+    this.checkLogin();
+  }
+
+  checkLogin() {
+    $.ajax({
+      url: '/loginCheck',
+      type: 'GET',
+      success: (data) => {
+        const parsedData = JSON.parse(data);
+        this.setState(
+          {
+            userData: {
+              displayName: parsedData.displayName,
+              profileUrl: parsedData.profileUrl,
+              username: parsedData.username,
+            },
+          }
+        );
+        this.forceUpdate();
+      },
+    });
   }
 
   handleMainSubmit(data) {
@@ -40,59 +58,52 @@ class AppView extends React.Component {
     this.forceUpdate();
   }
 
-  render() {
-    const ScreenShareViewWrap = () => {
-      return (
-        <ScreenShareView sessionData={this.state.sessionData} />
-      );
-    };
-=======
-    // ajax request to see if user is logged in
-    // if not displayName/profileUrl/username will be undefiend
-    $.ajax({
-      url: '/loginCheck',
-      type: 'GET',
-      success: (data) => {
-        const parsedData = JSON.parse(data);
-        this.setState(
-          {
-            displayName: parsedData.displayName,
-            profileUrl: parsedData.profileUrl,
-            username: parsedData.username,
-          }
-        );
-      },
-    });
-    // Currently Hardcoded
-    this.userId = userIdOptions[Math.floor(Math.random() * userIdOptions.length)];
-    // this.handleChange = this.handleChange.bind(this);
-    // this.pages = {
-    //   Landingpage: <LandingPageView />,
-    //   Mainpage: <MainpageView userId={this.userId} />,
-    //   Session: <ScreenShareView userId={this.userId} />,
-    //   Feedback: <FeedbackView />,
-    //   Helper: <HelperView />,
-    // };
+  handleLogin() {
+    window.location = 'auth/github';
+  }
+
+  requireAuth(nextState, replaceState) {
+   // use this to block routes if not logged in
+   // may have to add state to login page.
   }
   // {this.pages[this.state.currentPage]}
   // TODO: Build in navbar toggle
   render() {
-    const context = this;
-    const requireAuth = (nextState, replaceState) => {
-      if (!context.state.username) {
-        replaceState({ nextPathname: nextState.location.pathname }, '/login');
-      }
+    const ScreenShareViewWrap = () => {
+      return (
+        <ScreenShareView sessionData={this.state.sessionData} userData={this.state.userData} />
+      );
     };
-    // pass user data in as a prop on 
+    const HelperViewWrap = () => {
+      return (
+        <HelperView sessionData={this.state.sessionData} userData={this.state.userData} />
+      );
+    };
+    const MainpageViewWrap = () => {
+      return (
+        <MainpageView sessionData={this.state.sessionData} userData={this.state.userData} />
+      );
+    };
+    const FeedbackViewWrap = () => {
+      return (
+        <FeedbackView sessionData={this.state.sessionData} userData={this.state.userData} />
+      );
+    };
+    const LandingPageViewWrap = () => {
+      return (
+        <LandingPageView sessionData={this.state.sessionData} userData={this.state.userData} handleLogin={this.handleLogin} />
+      );
+    };
+    // pass user data in as a prop on
     return (
       <div className="container">
         <div className="title">Hack Roulette</div>
         <Router>
-          <Route path="/" component={MainpageView} onMainSubmit={this.handleMainSubmit} onEnter={requireAuth} />
-          <Route path="/login" component={LandingPageView} />
-          <Route path="/screenshare" component={ScreenShareViewWrap} sessionData={this.state.sessionData} onEnter={requireAuth} />
-          <Route path="/feedback" component={FeedbackView} onEnter={requireAuth} />
-          <Route path="/helper" component={HelperView} onEnter={requireAuth} />
+          <Route path="/" component={MainpageViewWrap} onMainSubmit={this.handleMainSubmit} onEnter={this.requireAuth} />
+          <Route path="/login" component={LandingPageViewWrap} />
+          <Route path="/screenshare" component={ScreenShareViewWrap} onEnter={this.requireAuth} />
+          <Route path="/feedback" component={FeedbackViewWrap} onEnter={this.requireAuth} />
+          <Route path="/helper" component={HelperViewWrap} onEnter={this.requireAuth} />
         </Router>
         <footer className="footer container-fluid text-center">
           <p className="col-lg-8">{"Made with <3"}</p>

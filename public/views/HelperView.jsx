@@ -17,7 +17,9 @@ class HelperView extends React.Component {
     this.state = {
       connected: false,
       list: [],
+      userData: this.props.userData,
     };
+    console.log('Helper userdata: ', this.props.userData);
     socket.emit('initializeConnection', 'HelpRequests');
     socket.emit('initialGetQueueList');
     socket.on('queueList', queueListArray => {
@@ -47,5 +49,9 @@ class HelperView extends React.Component {
   );
   }
 }
+
+HelperView.propTypes = {
+  userData: React.PropTypes.object.isRequired,
+};
 
 window.HelperView = HelperView;
