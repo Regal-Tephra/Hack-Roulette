@@ -63,3 +63,13 @@ exports.wipeUserEntries = () => {
     }
   });
 };
+
+exports.findIndexOfProperty = (array, property, target) => {
+  const length = array.length;
+  for (let i = 0; i < length; i++) {
+    if (array[i].property === target) {
+      return i;
+    }
+  }
+};
+
