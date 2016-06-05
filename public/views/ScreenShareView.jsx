@@ -35,10 +35,9 @@ class ScreenShareView extends React.Component {
     };
     console.log('Screenshare userdata: ', this.props.userData);
     this.editorUpdated = this.editorUpdated.bind(this);
-    socket.on('text change', text => {
-      this.setState({ text });
-    });
+    console.log('joining room', room);
     socket.emit('join-room', room);
+    socket.on('text change', text => this.setState({ text }));
     socket.emit('connectUser', this.props.userId);
 
     // Icecomm Video Chat. In the future, we can decide which room each person joins.

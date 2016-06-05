@@ -5,6 +5,7 @@ const clients = {};
 module.exports = io => {
   io.of('/screenshare').on('connection', socket => {
     let room;
+    let text = '';
     console.log(`Connected to: ${socket.id}`);
     socket.on('join-room', roomName => {
       console.log('joining room', roomName);
@@ -13,8 +14,10 @@ module.exports = io => {
       }
       room = roomName;
       socket.join(room);
+      socket.emit('text change', text);
     });
-    socket.on('change', text => {
+    socket.on('change', newText => {
+      text = newText;
       console.log(room, text);
       socket.broadcast.to(room).emit('text change', text);
     });
