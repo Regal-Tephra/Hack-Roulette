@@ -27,8 +27,6 @@ class MainpageView extends React.Component {
       userData: this.props.userData,
     };
     console.log('Mainpage userdata: ', this.props.userData);
-    // emit the correct listener for mainpageview here when created
-    socket.emit('initializeConnection', 'HelpRequests');
     this.updateRequestText = this.updateRequestText.bind(this);
     this.sendRequestText = this.sendRequestText.bind(this);
   }

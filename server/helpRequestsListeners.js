@@ -1,7 +1,8 @@
+'use strict';
 const handler = require('./request-handler');
 
 const helpRequestsQueue = [];
-
+let helpRequestID = 0;
 
 module.exports = io => {
   io.of('/help-requests').on('connection', socket => {
@@ -20,10 +21,17 @@ module.exports = io => {
     // Potential Problem Areas
     // Will we have an issue with emitting to the wrong places?
 
-    socket.on('queued', (message, fn) => {
+    socket.on('getCurrentQueueList', () => {
+      socket.emit('queueList', helpRequestsQueue);
+    });
+    socket.on('queued', (message, respondToClient1) => {
       console.log('message queued:', message);
       // clients[message] = socket;
-      helpRequestsQueue.push(message);
+      helpRequestsQueue.push({
+        id: helpRequestID++,
+        text: message.requestText,
+        client1sessionID: message.client1sessionID,
+      });
       console.log('queue:', helpRequestsQueue);
       // Respond with data;
       const dataToReturn = {
@@ -34,7 +42,6 @@ module.exports = io => {
         requestText: message.requestText,
       };
 
-      const respondToClient1 = fn;
       // Should be an  asynchronous thing
       socket.broadcast.emit('queueList', helpRequestsQueue);
 
@@ -47,11 +54,6 @@ module.exports = io => {
         helpRequestsQueue.splice(
           handler.findIndexOfProperty(helpRequestsQueue, 'roomName', dataToReturn.roomName), 1
         );
-      });
-
-      socket.on('initialGetQueueList', () => {
-        socket.broadcast.emit('queueList', helpRequestsQueue);
-        console.log('Initial Queue', helpRequestsQueue);
       });
     });
   });

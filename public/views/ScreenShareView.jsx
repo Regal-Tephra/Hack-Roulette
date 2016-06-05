@@ -34,7 +34,6 @@ class ScreenShareView extends React.Component {
     };
     console.log('Screenshare userdata: ', this.props.userData);
     this.editorUpdated = this.editorUpdated.bind(this);
-    socket.emit('initializeConnection', 'ScreenShareView');
     socket.on('text change', text => {
       this.setState({ text });
     });
