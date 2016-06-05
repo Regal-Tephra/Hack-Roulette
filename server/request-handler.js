@@ -72,5 +72,5 @@ exports.findIndexOfProperty = (array, property, target) => {
       return i;
     }
   }
+  return null;
 };
-

@@ -22,6 +22,7 @@ class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
 
+    const room = `room-${this.props.room}`;
     console.log('This is props', this.props);
     console.log('This is sessionData', this.props.sessionData);
 
@@ -37,6 +38,7 @@ class ScreenShareView extends React.Component {
     socket.on('text change', text => {
       this.setState({ text });
     });
+    socket.emit('join-room', room);
     socket.emit('connectUser', this.props.userId);
 
     // Icecomm Video Chat. In the future, we can decide which room each person joins.
@@ -111,6 +113,7 @@ class ScreenShareView extends React.Component {
 ScreenShareView.propTypes = {
   sessionData: React.PropTypes.object.isRequired,
   userData: React.PropTypes.object.isRequired,
+  room: React.PropTypes.number.isRequired,
 };
 window.ScreenShareView = ScreenShareView;
 // videoHandler={this.handleVideo.bind(this)}
