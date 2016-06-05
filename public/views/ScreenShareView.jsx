@@ -13,7 +13,6 @@
   // Other half of screen will be dedicated to the textshare
   // Complete Session button will be at the bottom of the screen
 
-
 // Need to remove API Key.
 const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
 const Link = ReactRouter.Link;
@@ -23,8 +22,6 @@ class ScreenShareView extends React.Component {
     super(props);
 
     const room = `room-${this.props.room}`;
-    console.log('This is props', this.props);
-    console.log('This is sessionData', this.props.sessionData);
 
     this.state = {
       text: '',
@@ -36,7 +33,12 @@ class ScreenShareView extends React.Component {
     console.log('Screenshare userdata: ', this.props.userData);
     this.editorUpdated = this.editorUpdated.bind(this);
     console.log('joining room', room);
+
+    // join room retrieve room data 2 ways
+    // (switching views and refreshing new view has 2 different routes)
+    // socket.on('connect', () => console.log('join in connect') || socket.emit('join-room', room));
     socket.emit('join-room', room);
+
     socket.on('text change', text => this.setState({ text }));
     socket.emit('connectUser', this.props.userId);
 
@@ -56,7 +58,7 @@ class ScreenShareView extends React.Component {
       that.refs.peerStream2.src.id = peer.ID;
     });
 
-    comm.connect('my_room', { audio: true });
+    comm.connect(room, { audio: true });
     // Remove peer stream when disconnected
     comm.on('disconnect', () => {
       that.refs.videoStream1.src = '';
@@ -83,7 +85,9 @@ class ScreenShareView extends React.Component {
       <div>
         <NavbarView videoHandler={this.handleVideo} />
         <div className="col-md-6">
-          <div className="text-center bg-primary">Shared Text Editor {this.state.user1} && {this.state.user2}</div>
+          <div className="text-center bg-primary">
+            Shared Text Editor {this.state.user1} && {this.state.user2}
+          </div>
           <textarea
             className="session-text-share"
             onChange={this.editorUpdated} value={this.state.text}
@@ -113,6 +117,7 @@ ScreenShareView.propTypes = {
   sessionData: React.PropTypes.object.isRequired,
   userData: React.PropTypes.object.isRequired,
   room: React.PropTypes.number.isRequired,
+  userId: React.PropTypes.number.isRequired,
 };
 window.ScreenShareView = ScreenShareView;
 // videoHandler={this.handleVideo.bind(this)}
