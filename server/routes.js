@@ -5,7 +5,7 @@ module.exports = (app, passport, handler) => {
     () => {}
   );
   app.get('/auth/github/callback',
-    passport.authenticate('github', { failureRedirect: '/login' }),
+    passport.authenticate('github', { failureRedirect: '/' }),
     handler.loggedInUser
   );
   app.get('/addUser', handler.isUser, (req, res) => {
@@ -21,8 +21,6 @@ module.exports = (app, passport, handler) => {
     req.on('end', () => {
       res.end(JSON.stringify(req.user));
     });
-    // console.log('hello world, user is logged in as: ' + req.user.username);
-    // res.send('hello world, user is logged in as: ' + req.user.username);
   });
   app.post('/feedback', (req, res) => {
     // TODO: Add feedback into the server
