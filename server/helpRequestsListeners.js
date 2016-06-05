@@ -27,6 +27,7 @@ module.exports = io => {
         id: ++helpRequestID,
         text: message.requestText,
         client1sessionID: message.client1sessionID,
+        userData: message.userData,
       });
       respond({ id: helpRequestID });
     });

@@ -41,7 +41,7 @@ class MainpageView extends React.Component {
     e.preventDefault();
     document.getElementById('text').value = '';
     this.setState({ requestText: '' });
-    socket.emit('addRequest', { requestText: this.state.requestText },
+    socket.emit('addRequest', { requestText: this.state.requestText, userData: this.state.userData },
       data => {
         // set roomId and switch to screenshare view
         console.log('Server responded', data);
