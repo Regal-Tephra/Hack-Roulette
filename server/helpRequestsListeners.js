@@ -22,6 +22,7 @@ module.exports = io => {
     // Will we have an issue with emitting to the wrong places?
 
     socket.on('getCurrentQueueList', () => {
+      console.log('requested queue list')
       socket.emit('queueList', helpRequestsQueue);
     });
     socket.on('queued', (message, respondToClient1) => {

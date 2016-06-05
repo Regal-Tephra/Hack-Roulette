@@ -28,6 +28,7 @@ class AppView extends React.Component {
     this.state = {
       sessionData: {},
       userData: {},
+      sessionRoom: { id: 5 },
     };
     this.checkLogin();
     this.views = {
@@ -35,12 +36,13 @@ class AppView extends React.Component {
         <ScreenShareView
           sessionData={this.state.sessionData}
           userData={this.state.userData}
-          room={5}
+          room={this.state.sessionRoom.id}
         />,
       helper: () =>
         <HelperView
           sessionData={this.state.sessionData}
           userData={this.state.userData}
+          sessionRoom={this.state.sessionRoom}
         />,
       mainpage: () =>
         <MainpageView

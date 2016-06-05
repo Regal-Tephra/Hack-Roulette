@@ -6,9 +6,7 @@
   io
 */
 
-// const Link = ReactRouter.Link;
-
-// BUG: Currently does not dynamically update list of requests
+const Link = ReactRouter.Link;
 
 const socket = io('/help-requests');
 class HelperView extends React.Component {
@@ -21,6 +19,7 @@ class HelperView extends React.Component {
     };
     console.log('Helper userdata: ', this.props.userData);
     socket.on('connect', () => socket.emit('getCurrentQueueList'));
+    socket.emit('getCurrentQueueList');
     socket.on('queueList', queueListArray => {
       console.log(queueListArray);
       this.setState({ list: queueListArray });
@@ -41,7 +40,16 @@ class HelperView extends React.Component {
           You are helping!!
           <br></br>
           <ul className="list">
-            {this.state.list.map((helpRequest, key) => <li key={key}>{helpRequest.text}</li>)}
+            {this.state.list.map((helpRequest, key) =>
+              (<li
+                key={key}
+                onClick={() => (this.props.sessionRoom.id = helpRequest.id)}
+              >
+                <Link to="/screenshare">
+                  {helpRequest.text}
+                </Link>
+              </li>)
+            )}
           </ul>
         </div>
       </div>
@@ -51,6 +59,7 @@ class HelperView extends React.Component {
 
 HelperView.propTypes = {
   userData: React.PropTypes.object.isRequired,
+  sessionRoom: React.PropTypes.object.isRequired,
 };
 
 window.HelperView = HelperView;
