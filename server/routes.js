@@ -13,7 +13,6 @@ module.exports = (app, passport, handler) => {
     res.redirect('/');
   });
   app.get('/loginCheck', (req, res) => {
-
     console.log(req.user);
     let data = '';
     req.on('data', d => {
