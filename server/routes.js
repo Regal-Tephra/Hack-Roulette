@@ -1,3 +1,4 @@
+'use strict';
 module.exports = (app, passport, handler) => {
   app.get('/auth/github',
     passport.authenticate('github', { scope: ['user:email', 'read:org'] }),
