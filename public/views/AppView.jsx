@@ -12,6 +12,7 @@
   ReactRouter
   Router
   Route
+  $
 */
 
 const Router = ReactRouter.Router;
@@ -29,6 +30,36 @@ class AppView extends React.Component {
       userData: {},
     };
     this.checkLogin();
+    this.views = {
+      screenshare: () =>
+        <ScreenShareView
+          sessionData={this.state.sessionData}
+          userData={this.state.userData}
+          room={5}
+        />,
+      helper: () =>
+        <HelperView
+          sessionData={this.state.sessionData}
+          userData={this.state.userData}
+        />,
+      mainpage: () =>
+        <MainpageView
+          sessionData={this.state.sessionData}
+          userData={this.state.userData}
+          onMainSubmit={this.handleMainSubmit}
+        />,
+      feedback: () =>
+        <FeedbackView
+          sessionData={this.state.sessionData}
+          userData={this.state.userData}
+        />,
+      landingpage: () =>
+        <LandingPageView
+          sessionData={this.state.sessionData}
+          userData={this.state.userData}
+          handleLogin={this.handleLogin}
+        />,
+    };
   }
 
   handleMainSubmit(data) {
@@ -67,41 +98,30 @@ class AppView extends React.Component {
   // {this.pages[this.state.currentPage]}
   // TODO: Build in navbar toggle
   render() {
-    const ScreenShareViewWrap = () => {
-      return (
-        <ScreenShareView sessionData={this.state.sessionData} userData={this.state.userData} />
-      );
-    };
-    const HelperViewWrap = () => {
-      return (
-        <HelperView sessionData={this.state.sessionData} userData={this.state.userData} />
-      );
-    };
-    const MainpageViewWrap = () => {
-      return (
-        <MainpageView sessionData={this.state.sessionData} userData={this.state.userData} />
-      );
-    };
-    const FeedbackViewWrap = () => {
-      return (
-        <FeedbackView sessionData={this.state.sessionData} userData={this.state.userData} />
-      );
-    };
-    const LandingPageViewWrap = () => {
-      return (
-        <LandingPageView sessionData={this.state.sessionData} userData={this.state.userData} handleLogin={this.handleLogin} />
-      );
-    };
     // pass user data in as a prop on
     return (
       <div className="container">
         <div className="title">Hack Roulette</div>
         <Router>
-          <Route path="/" component={MainpageViewWrap} onMainSubmit={this.handleMainSubmit} onEnter={this.requireAuth} />
-          <Route path="/login" component={LandingPageViewWrap} />
-          <Route path="/screenshare" component={ScreenShareViewWrap} onEnter={this.requireAuth} />
-          <Route path="/feedback" component={FeedbackViewWrap} onEnter={this.requireAuth} />
-          <Route path="/helper" component={HelperViewWrap} onEnter={this.requireAuth} />
+          <Route
+            onEnter={this.requireAuth}
+            path="/" component={this.views.mainpage}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/screenshare" component={this.views.screenshare}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/login" component={this.views.landingpage} />
+          <Route
+            onEnter={this.requireAuth}
+            path="/feedback" component={this.views.feedback}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/helper" component={this.views.helper}
+          />
         </Router>
         <footer className="footer container-fluid text-center">
           <p className="col-lg-8">{"Made with <3"}</p>

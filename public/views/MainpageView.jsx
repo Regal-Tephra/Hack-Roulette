@@ -50,8 +50,8 @@ class MainpageView extends React.Component {
     this.setState({ requestText: '', loaded: true });
     socket.emit('queued', messageSent, data => {
       this.setState({ loaded: false });
-      this.props.route.onMainSubmit(data);
-      this.props.history.push('/screenshare');
+      // this.props.route.onMainSubmit(data);
+      // this.props.history.push('/screenshare');
     });
   }
 
@@ -89,10 +89,9 @@ class MainpageView extends React.Component {
 }
 
 MainpageView.propTypes = {
-  route: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
+  // route: React.PropTypes.object.isRequired,
+  // history: React.PropTypes.object.isRequired,
   userData: React.PropTypes.object.isRequired,
 };
-
 
 window.MainpageView = MainpageView;

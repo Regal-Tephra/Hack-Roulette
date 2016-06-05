@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose');
-const userSchema = mongoose.Schema({
+const mongooseSchema = mongoose.Schema; // workaround for eslint new-cap error
+const userSchema = mongooseSchema({
   email: { type: String, required: true, index: { unique: true } },
 });
 
