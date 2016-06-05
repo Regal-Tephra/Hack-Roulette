@@ -24,7 +24,9 @@ class MainpageView extends React.Component {
       loaded: false,
       queueStatus: false,
       requestText: '',
+      userData: this.props.userData,
     };
+    console.log('Mainpage userdata: ', this.props.userData);
     // emit the correct listener for mainpageview here when created
     socket.emit('initializeConnection', 'HelpRequests');
     this.updateRequestText = this.updateRequestText.bind(this);
@@ -89,8 +91,10 @@ class MainpageView extends React.Component {
 }
 
 MainpageView.propTypes = {
-  route: React.PropTypes,
-  history: React.PropTypes,
+  route: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired,
+  userData: React.PropTypes.object.isRequired,
 };
+
 
 window.MainpageView = MainpageView;
