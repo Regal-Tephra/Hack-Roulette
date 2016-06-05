@@ -41,7 +41,7 @@ class HelperView extends React.Component {
           You are helping!!
           <br></br>
           <ul className="list">
-            {this.state.list.map((helpRequest, key) => <li key={key}>{helpRequest.text}</li>)}
+            {this.state.list.map((helpRequest, key) => <li key={key}>{helpRequest.userData.displayName} : {helpRequest.text}</li>)}
           </ul>
         </div>
       </div>

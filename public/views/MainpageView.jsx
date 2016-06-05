@@ -40,6 +40,7 @@ class MainpageView extends React.Component {
     e.preventDefault();
 
     const messageSent = {
+      userData: this.state.userData,
       client1sessionID: socket.io.engine.id,
       requestText: this.state.requestText,
     };

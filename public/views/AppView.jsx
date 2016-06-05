@@ -79,6 +79,7 @@ class AppView extends React.Component {
               displayName: parsedData.displayName,
               profileUrl: parsedData.profileUrl,
               username: parsedData.username,
+              avatar: parsedData._json.avatar_Url,
             },
           }
         );
@@ -88,10 +89,14 @@ class AppView extends React.Component {
   }
 
   handleLogin() {
+    // this is the issue, should be an ajax not a change of loc.
     window.location = 'auth/github';
   }
 
-  requireAuth(nextState, replaceState) {
+  requireAuth(nextState, transition) {
+    if(!this.state.loggedIn) {
+      transition({ nextPathname: nextState.location.pathname }, '/login');
+    }
    // use this to block routes if not logged in
    // may have to add state to login page.
   }

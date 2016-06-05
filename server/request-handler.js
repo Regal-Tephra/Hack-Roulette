@@ -21,7 +21,6 @@ exports.isLoggedIn = (req) => {
 };
 
 exports.isUser = (req, res, next) => {
-  console.log('req', req);
   if (exports.isLoggedIn(req)) {
     next();
   } else {

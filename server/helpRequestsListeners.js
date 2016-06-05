@@ -27,9 +27,11 @@ module.exports = io => {
     socket.on('queued', (message, respondToClient1) => {
       console.log('message queued:', message);
       // clients[message] = socket;
+      console.log('message', message.userData);
       helpRequestsQueue.push({
         id: helpRequestID++,
         text: message.requestText,
+        userData: message.userData,
         client1sessionID: message.client1sessionID,
       });
       console.log('queue:', helpRequestsQueue);
