@@ -14,6 +14,11 @@
   // When the server finishes loading or finds a match, send to
     // the screenshare page
 
+  // TODO: Need to show loading page
+  // PSEUDOCODE:
+    // Step 1: Emit to Server and Show Loading View
+    // Step 2: Wait for response from server (callback/promise)
+    // Step 3: Turn off loading view and redirect when data is received
 
 const socket = io('/help-requests');
 class MainpageView extends React.Component {
@@ -21,7 +26,6 @@ class MainpageView extends React.Component {
     super(props);
     console.log(props);
     this.state = {
-      loaded: false,
       queueStatus: false,
       requestText: '',
       userData: this.props.userData,
@@ -31,40 +35,26 @@ class MainpageView extends React.Component {
     this.sendRequestText = this.sendRequestText.bind(this);
   }
 
-  // TODO: Need to show loading page
-  // PSEUDOCODE:
-    // Step 1: Emit to Server and Show Loading View
-    // Step 2: Wait for response from server (callback/promise)
-    // Step 3: Turn off loading view and redirect when data is received
   sendRequestText(e) {
+    // Send request to server
+    console.log('Sending request', this.state.requestText);
     e.preventDefault();
-
-    const messageSent = {
-      client1sessionID: socket.io.engine.id,
-      requestText: this.state.requestText,
-    };
-
-    // Emit to Server and Show Loading View
-    console.log('Emitting', this.state.requestText);
     document.getElementById('text').value = '';
-    this.setState({ requestText: '', loaded: true });
-    socket.emit('queued', messageSent, data => {
-      // this.setState({ loaded: false });
-      this.props.sessionRoom.id = data.id;
-      // this.props.route.onMainSubmit(data);
-      window.location = '#/screenshare';
-    });
+    this.setState({ requestText: '' });
+    socket.emit('addRequest', { requestText: this.state.requestText },
+      data => {
+        // set roomId and switch to screenshare view
+        console.log('Server responded', data);
+        this.props.sessionRoom.id = data.id;
+        window.location = '#/screenshare';
+      });
   }
-
   updateRequestText(e) {
+    // update state based on textbox change
     this.setState({ requestText: e.target.value });
   }
 
   render() {
-    const loading = this.state.loaded ?
-      <div>We are matching you with somebody!</div> :
-      <div></div>;
-
     return (
       <div>
         <NavbarView />
@@ -83,15 +73,12 @@ class MainpageView extends React.Component {
             <input type="submit" onClick={this.sendRequestText} value="Get Help Now!" />
           </div>
         </form>
-        {loading}
       </div>
-  );
+    );
   }
 }
 
 MainpageView.propTypes = {
-  // route: React.PropTypes.object.isRequired,
-  // history: React.PropTypes.object.isRequired,
   userData: React.PropTypes.object.isRequired,
   sessionRoom: React.PropTypes.object.isRequired,
 };
