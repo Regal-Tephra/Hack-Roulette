@@ -29,14 +29,8 @@ app.use(sessionMiddleware);
 
 
 // Socket Event Listeners
-const helpRequestsListeners = require('./helpRequestsListeners');
-const screenShareViewListeners = require('./screenshareRequestsListeners');
-io.on('connection', socket => {
-  socket.on('initializeConnection', connectionType => {
-    if (connectionType === 'HelpRequests') helpRequestsListeners(socket);
-    else if (connectionType === 'ScreenShareView') screenShareViewListeners(socket);
-  });
-});
+require('./helpRequestsListeners')(io);
+require('./screenshareRequestsListeners')(io);
 
 
 app.use(passport.initialize());

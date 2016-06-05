@@ -1,3 +1,4 @@
+'use strict';
 // const request = require('request');
 
 // const db = require('./data/db/config');

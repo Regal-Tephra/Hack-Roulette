@@ -17,7 +17,7 @@
 // Need to remove API Key.
 const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
 const Link = ReactRouter.Link;
-const socket = io();
+const socket = io('/screenshare');
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);

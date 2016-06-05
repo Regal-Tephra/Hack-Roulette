@@ -15,7 +15,7 @@
     // the screenshare page
 
 
-const socket = io();
+const socket = io('/help-requests');
 class MainpageView extends React.Component {
   constructor(props) {
     super(props);

@@ -10,7 +10,7 @@
 
 // BUG: Currently does not dynamically update list of requests
 
-const socket = io();
+const socket = io('/help-requests');
 class HelperView extends React.Component {
   constructor(props) {
     super(props);
