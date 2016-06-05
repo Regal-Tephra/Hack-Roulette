@@ -1,3 +1,5 @@
+const handler = require('./request-handler');
+
 const helpRequestsQueue = [];
 module.exports = socket => {
   console.log('Initializing HelpRequests listener');
@@ -10,6 +12,10 @@ module.exports = socket => {
   // TODOS:
     // Get Github ID information
     // Need to generate room name
+    // Need to remove from queue the room that has been clicked
+
+  // Potential Problem Areas
+    // Will we have an issue with emitting to the wrong places?
 
   socket.on('queued', (message, fn) => {
     console.log('message queued:', message);
@@ -34,6 +40,10 @@ module.exports = socket => {
       dataToReturn.client2sessionID = data.client2sessionID;
       respondToClient1(dataToReturn);
       fn(dataToReturn);
+      // Remove from queue this specific room
+      helpRequestsQueue.splice(
+        handler.findIndexOfProperty(helpRequestsQueue, 'roomName', dataToReturn.roomName), 1
+      );
     });
   });
 
@@ -42,3 +52,5 @@ module.exports = socket => {
     console.log('Initial Queue', helpRequestsQueue);
   });
 };
+
+
