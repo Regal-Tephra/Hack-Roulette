@@ -49,6 +49,7 @@ class AppView extends React.Component {
           sessionData={this.state.sessionData}
           userData={this.state.userData}
           onMainSubmit={this.handleMainSubmit}
+          sessionRoom={this.state.sessionRoom}
         />,
       feedback: () =>
         <FeedbackView

@@ -13,7 +13,6 @@
   // Other half of screen will be dedicated to the textshare
   // Complete Session button will be at the bottom of the screen
 
-
 // Need to remove API Key.
 const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
 const Link = ReactRouter.Link;

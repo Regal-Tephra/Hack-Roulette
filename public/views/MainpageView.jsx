@@ -49,9 +49,10 @@ class MainpageView extends React.Component {
     document.getElementById('text').value = '';
     this.setState({ requestText: '', loaded: true });
     socket.emit('queued', messageSent, data => {
-      this.setState({ loaded: false });
+      // this.setState({ loaded: false });
+      this.props.sessionRoom.id = data.id;
       // this.props.route.onMainSubmit(data);
-      // this.props.history.push('/screenshare');
+      window.location = '#/screenshare';
     });
   }
 
@@ -92,6 +93,7 @@ MainpageView.propTypes = {
   // route: React.PropTypes.object.isRequired,
   // history: React.PropTypes.object.isRequired,
   userData: React.PropTypes.object.isRequired,
+  sessionRoom: React.PropTypes.object.isRequired,
 };
 
 window.MainpageView = MainpageView;

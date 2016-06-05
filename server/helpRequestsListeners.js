@@ -28,20 +28,21 @@ module.exports = io => {
       console.log('message queued:', message);
       // clients[message] = socket;
       helpRequestsQueue.push({
-        id: helpRequestID++,
+        id: ++helpRequestID,
         text: message.requestText,
         client1sessionID: message.client1sessionID,
       });
       console.log('queue:', helpRequestsQueue);
       // Respond with data;
       const dataToReturn = {
-        roomName: 'my_room',
-        client1ID: message.client1sessionID,
-        // TODO: Add client2 id
-        client2ID: 'DUMMYDATA',
-        requestText: message.requestText,
+        id: helpRequestID,
+        // roomName: 'my_room',
+        // client1ID: message.client1sessionID,
+        // // TODO: Add client2 id
+        // client2ID: 'DUMMYDATA',
+        // requestText: message.requestText,
       };
-
+      respondToClient1(dataToReturn);
       // Should be an  asynchronous thing
       socket.broadcast.emit('queueList', helpRequestsQueue);
 
