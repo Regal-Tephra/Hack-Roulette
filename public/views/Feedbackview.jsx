@@ -17,7 +17,7 @@ class FeedbackView extends React.Component {
       feedbackText: '',
       userData: this.props.userData,
     };
-    console.log('Feedback userdata: ', this.props.userData)
+    console.log('Feedback userdata: ', this.props.userData);
   }
 
   componentDidUpdate() {
@@ -58,7 +58,7 @@ class FeedbackView extends React.Component {
         });
         // TODO Uncheck all the boxes
         // TODO: This method actually isn't changing the page itself
-        ReactRouter.browserHistory.push('/');
+        window.location = '#/';
       }.bind(this),
       error: (err) => {
         console.log('Woo we got an error');
@@ -68,7 +68,7 @@ class FeedbackView extends React.Component {
           rating: '',
           feedbackText: '',
         });
-        ReactRouter.browserHistory.push('/');
+        window.location = '#/';
       },
     });
   }

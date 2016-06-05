@@ -31,23 +31,37 @@ class HelperView extends React.Component {
   // STEP 2: Wait for data about new room
   // STEP 3: REDIRECT TO ROOM
 
+// TODO
+  // 1. Need to add ability to emit to server so that
+  // 2. Ideally, the request form will have a title, description, person, create time
+
 // TRY TO PRINT QUEUELISTARRAY DOWN THERE
   render() {
     return (
       <div>
         <NavbarView />
-        <div className="text-center">
-          You are helping!!
+        <div>
+          <div className='text-center'>
+          <span>Latest Help Requests</span>
+          </div>
           <br></br>
-          <ul className="list">
+          <ul className="list-group">
             {this.state.list.map((helpRequest, key) =>
               (<li
+                className="list-group-item clearfix subcontainer"
                 key={key}
-                onClick={() => (this.props.sessionRoom.id = helpRequest.id)}
-               >
-                <img src={helpRequest.userData.avatar} alt={helpRequest.userData.username} class="img-thumbnail" height="100" width="100"></img>
-                <Link to="/screenshare">
-                  {helpRequest.userData.displayName || 'Anonymous'}: {helpRequest.text}
+                onClick={() => {
+                  this.props.sessionRoom.id = helpRequest.id;
+                  socket.emit('removeFromQueue', { roomID: helpRequest.id });
+                }}
+              >
+                <div className="pull-left col-sm-2">
+                  <img src={helpRequest.userData.avatar} alt={helpRequest.userData.username} class="img-thumbnail" height="100" width="100"></img>
+                </div>
+                <Link className="col-sm-10" to="/screenshare">
+                  <div className="h2 bold">{helpRequest.text}</div>
+                  <div>Requested By: {helpRequest.userData.displayName || 'Anonymous'}</div>
+                  <div>Time: [5 minutes ago] </div>
                 </Link>
               </li>)
             )}
