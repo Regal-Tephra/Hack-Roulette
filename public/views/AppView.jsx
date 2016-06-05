@@ -127,15 +127,19 @@ class AppView extends React.Component {
             path="/helper" component={this.views.helper}
           />
         </Router>
-        <footer className="footer container-fluid text-center">
-          <p className="col-lg-8">{"Made with <3"}</p>
-        </footer>
+
       </div>
     );
   }
 }
 
 // ScreenShareView Wrapper to Include PROPS
+
+/* 
+        <footer className="footer container-fluid text-center">
+          <p className="col-lg-8">{"Made with <3"}</p>
+        </footer>
+*/
 
 
 ReactDOM.render(<AppView />, document.getElementById('app'));

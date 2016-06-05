@@ -60,7 +60,7 @@ class MainpageView extends React.Component {
         <NavbarView />
         <form>
           <div className="text-center" >
-            Please Enter Your Why You Need Help and the Language
+            Please Enter Why You Need Help and the Language
             <br></br>
             <textarea
               id="text"

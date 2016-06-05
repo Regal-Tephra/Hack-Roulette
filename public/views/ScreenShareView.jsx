@@ -8,10 +8,9 @@
    io
    */
 
-// Need to build in screensplit
-  // Half of screen will be dedicated to the screenshare
-  // Other half of screen will be dedicated to the textshare
-  // Complete Session button will be at the bottom of the screen
+// SCREENSHARE TODOS:
+  // 1. Get client1 and client2 information into the page
+  // 2. Get the reason for help onto the page as well
 
 // Need to remove API Key.
 const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
@@ -25,8 +24,8 @@ class ScreenShareView extends React.Component {
 
     this.state = {
       text: '',
-      user1: this.props.sessionData.client1ID,
-      user2: this.props.sessionData.client2ID,
+      user1: this.props.sessionData.client1ID || 'NOT EXISTING',
+      user2: this.props.sessionData.client2ID || 'NOT EXISTING',
       showVideo: true,
       userData: this.props.userData,
     };

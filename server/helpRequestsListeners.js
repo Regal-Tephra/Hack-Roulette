@@ -1,5 +1,5 @@
 'use strict';
-// const handler = require('./request-handler');
+const handler = require('./request-handler');
 
 const helpRequestsQueue = [];
 let helpRequestID = 0;
@@ -11,9 +11,8 @@ let helpRequestID = 0;
     // Step 3: When receive response, then emit to both Client 1 and Client 2 details of chat
 
     // TODOS:
-    // Get Github ID information
-    // Need to generate room name
-    // Need to remove from queue the room that has been clicked
+    // 1. Build a way to remove rooms from the queue (might be in the helper view)
+    // 2. Get queue data to persist
 
 module.exports = io => {
   io.of('/help-requests').on('connection', socket => {
@@ -30,6 +29,11 @@ module.exports = io => {
         userData: message.userData,
       });
       respond({ id: helpRequestID });
+    });
+
+    // On a join room request from a helper, remove that listing from the queue
+    socket.on('removeFromQueue', (roomID) => {
+      helpRequestsQueue.splice(handler.findIndexOfProperty(helpRequestsQueue, 'id', roomID), 1);
     });
   });
 };
