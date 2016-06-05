@@ -82,6 +82,7 @@ class AppView extends React.Component {
               displayName: parsedData.displayName,
               profileUrl: parsedData.profileUrl,
               username: parsedData.username,
+              avatar: parsedData._json.avatar_url,
             },
           }
         );

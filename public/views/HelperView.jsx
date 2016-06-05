@@ -44,9 +44,10 @@ class HelperView extends React.Component {
               (<li
                 key={key}
                 onClick={() => (this.props.sessionRoom.id = helpRequest.id)}
-              >
+               >
+                <img src={helpRequest.userData.avatar} alt={helpRequest.userData.username} class="img-thumbnail" height="100" width="100"></img>
                 <Link to="/screenshare">
-                  {helpRequest.text}
+                  {helpRequest.userData.displayName || 'Anonymous'}: {helpRequest.text}
                 </Link>
               </li>)
             )}
