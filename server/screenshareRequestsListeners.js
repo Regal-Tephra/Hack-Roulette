@@ -14,6 +14,7 @@ module.exports = io => {
       }
       room = roomName;
       socket.join(room);
+      console.log('emitting text change', text);
       socket.emit('text change', text);
     });
     socket.on('change', newText => {
