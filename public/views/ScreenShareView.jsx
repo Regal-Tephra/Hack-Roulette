@@ -56,7 +56,7 @@ class ScreenShareView extends React.Component {
       that.refs.peerStream2.src.id = peer.ID;
     });
 
-    comm.connect('my_room', { audio: true });
+    comm.connect(room, { audio: true });
     // Remove peer stream when disconnected
     comm.on('disconnect', () => {
       that.refs.videoStream1.src = '';
