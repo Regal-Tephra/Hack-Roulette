@@ -74,6 +74,9 @@ class ScreenShareView extends React.Component {
 
   handleVideo() {
     // comm.leave(true);
+    // If room only has 1 person and person leaves
+      // Then emit a dequeue to the server
+
     console.log(comm);
     comm.close();
   }
@@ -85,7 +88,7 @@ class ScreenShareView extends React.Component {
         <NavbarView videoHandler={this.handleVideo} />
         <div className="col-md-6">
           <div className="text-center bg-primary">
-            Shared Text Editor {this.state.user1} && {this.state.user2}
+            Shared Text Editor
           </div>
           <textarea
             className="session-text-share"

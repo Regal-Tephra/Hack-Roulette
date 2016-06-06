@@ -11,8 +11,8 @@ let helpRequestID = 0;
     // Step 3: When receive response, then emit to both Client 1 and Client 2 details of chat
 
     // TODOS:
-    // 1. Build a way to remove rooms from the queue (might be in the helper view)
     // 2. Get queue data to persist
+    // Need a way to close the room when player 1 leaves the chat
 
 module.exports = io => {
   io.of('/help-requests').on('connection', socket => {
