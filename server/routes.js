@@ -27,13 +27,12 @@ module.exports = (app, passport, handler) => {
     req.on('end', () => {
       res.end(JSON.stringify(req.user));
     });
-    // console.log('hello world, user is logged in as: ' + req.user.username);
-    // res.send('hello world, user is logged in as: ' + req.user.username);
   });
   app.post('/feedback', (req, res) => {
     // TODO: Add feedback into the server
     console.log('Got stuff from feedback!');
     console.log(req.body);
+    handler.addFeedback(); // TODO: See what feedback is received
     res.status(200).json('Woo');
   });
   app.get('/logout', handler.logoutUser);

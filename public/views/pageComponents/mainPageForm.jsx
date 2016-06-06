@@ -7,7 +7,7 @@
   io
 */
 
-const Link = ReactRouter.Link;
+// const Link = ReactRouter.Link;
 
 const socket = io('/help-requests');
 class MainpageForm extends React.Component {

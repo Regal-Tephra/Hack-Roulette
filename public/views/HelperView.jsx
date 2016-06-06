@@ -32,15 +32,6 @@ class HelperView extends React.Component {
     });
   }
 
-// JOIN HELP REQUEST ROOM
-  // STEP 1: Click interested Room
-  // STEP 2: Wait for data about new room
-  // STEP 3: REDIRECT TO ROOM
-
-// TODO
-  // 1. Need to add ability to emit to server so that
-  // 2. Ideally, the request form will have a title, description, person, create time
-
 // TRY TO PRINT QUEUELISTARRAY DOWN THERE
   render() {
     // If there are no items on the list, display a photo
@@ -59,6 +50,7 @@ class HelperView extends React.Component {
                 key={key}
                 onClick={() => {
                   this.props.sessionRoom.id = helpRequest.id;
+                  socket.emit('joinRoom', { userInfo: this.props.userData, helpInfo: helpRequest });
                   socket.emit('removeFromQueue', { roomID: helpRequest.id });
                 }}
               >
