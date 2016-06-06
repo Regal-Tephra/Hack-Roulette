@@ -34,8 +34,8 @@ class MainpageView extends React.Component {
     return (
       <div>
         <NavbarView />
-        <div className="col-md-5 col-md-offset-6">
-          <div className="text-center">Get Help now!</div>
+        <div className="text-center col-md-5 col-md-offset-3 form-container">
+          <div className="text-center">Get Help Now</div>
           <br></br>
           <MainpageForm
             userData={this.props.userData}
@@ -46,6 +46,8 @@ class MainpageView extends React.Component {
     );
   }
 }
+
+// col-md-offset-6
 
 MainpageView.propTypes = {
   userData: React.PropTypes.object.isRequired,

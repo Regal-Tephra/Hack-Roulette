@@ -77,8 +77,8 @@ class FeedbackView extends React.Component {
   render() {
     return (<div>
       <NavbarView />
-      <form className="text-center" onSubmit={this.handleSubmit}>
-        <div>
+      <form className="text-center col-sm-6 col-sm-offset-3 form-container" onSubmit={this.handleSubmit}>
+        <div className="form-group">
           <p> How would you rate your experience out of 5? </p>
           <label className="radio-inline">
             <input
@@ -125,8 +125,8 @@ class FeedbackView extends React.Component {
               onChange={this.handleRatingClick}
             /> 5
           </label>
-        </div><br />
-        <div>
+        </div>
+        <div className="form-group">
           <p> How was your experience? </p>
           <textarea
             id="text"
@@ -138,7 +138,7 @@ class FeedbackView extends React.Component {
             onChange={this.handleFeedbackText}
           ></textarea><br />
         </div>
-        <button type="submit">Submit Feedback</button>
+        <button type="submit" className="btn btn-success">Submit Feedback</button>
       </form>
     </div>
     );
