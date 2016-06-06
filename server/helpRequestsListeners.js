@@ -24,8 +24,8 @@ module.exports = io => {
     });
     socket.on('addRequest', (message, respond) => {
       // Add message to queue and respond with id so client can join room
-      console.log('This is the message received', message);    
-      // Add the help request to the queue  
+      console.log('This is the message received', message);
+      // Add the help request to the queue
       const newHelpRequest = {
         id: ++helpRequestID,
         text: message.requestText,
@@ -38,21 +38,22 @@ module.exports = io => {
 
       // Add the help request to the respective user
 
-      User.find({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
+      User.findOne({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
         if (err) {
           console.error(err);
           return null;
         }
         // Make edits to the current user
-        console.log("This is the userData", userDataFromDB[0]);
-        userDataFromDB[0].helpRequests.push(newHelpRequest);
-        userDataFromDB[0].save((saveErr, newUser) => {
+        console.log('This is the userData', userDataFromDB);
+        userDataFromDB.helpRequests.push(newHelpRequest);
+        userDataFromDB.save((saveErr, newUser) => {
           if (err) {
             console.error(saveErr);
             return;
           }
           console.log(`${newUser} has been updated.`);
         });
+        return null;
       });
 
       console.log('help requests', helpRequestsQueue);

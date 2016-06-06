@@ -80,15 +80,14 @@ class MainpageForm extends React.Component {
         </div>
         <div className="form-group">
           <label className="col-sm-3 control-label">Description </label>
-          <textarea
-            id="text"
-            className="col-sm-9"
-            // className="col-lg"
-            placeholder="e.g. looking for help with n-queens!"
-            rows="4"
-            // cols="49"
-            onChange={this.updateRequestText}
-          ></textarea><br></br>
+          <div className="col-sm-9">
+            <textarea
+              id="text"
+              placeholder="e.g. looking for help with n-queens!"
+              rows="4"
+              onChange={this.updateRequestText}
+            ></textarea>
+          </div>
         </div>
         <div className="h3" style={this.state.showAlert}>Please enter a valid request</div>
         <div>
