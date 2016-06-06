@@ -166,3 +166,16 @@ textarea {
   height: 60px;
   background-color: #f5f5f5;
 }
+
+#name {
+  text-align: center;
+}
+
+#numHelp {
+  color: #FF0099;
+  text-align: center;
+}
+
+#help {
+  text-align: center;
+}

@@ -61,7 +61,7 @@ module.exports = io => {
     });
 
     socket.on('joinRoom', (message) => {
-      User.findOne({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
+      User.findOne({ githubID: message.userInfo.githubID }, (err, userDataFromDB) => {
         if (err) {
           console.error(err);
           return null;
@@ -89,5 +89,19 @@ module.exports = io => {
 
       socket.broadcast.emit('queueList', helpRequestsQueue);
     });
+
+    socket.on('getUserStats', (githubId) => {
+      console.log('I got a socket request on getUserStats');
+      User.findOne({ githubID: githubId }, (err, data) => {
+        if (err) {
+          console.error(err);
+          return null;
+        }
+        console.log(data);
+        socket.emit('receiveUserData', data);
+      });
+    });
+
+
   });
 };
