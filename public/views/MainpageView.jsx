@@ -29,6 +29,7 @@ class MainpageView extends React.Component {
       queueStatus: false,
       requestText: '',
       userData: this.props.userData,
+      showAlert: {display: 'none'},
     };
     console.log('Mainpage userdata: ', this.props.userData);
     this.updateRequestText = this.updateRequestText.bind(this);
@@ -36,18 +37,23 @@ class MainpageView extends React.Component {
   }
 
   sendRequestText(e) {
-    // Send request to server
-    console.log('Sending request', this.state.requestText);
-    e.preventDefault();
-    document.getElementById('text').value = '';
-    this.setState({ requestText: '' });
-    socket.emit('addRequest', { requestText: this.state.requestText, userData: this.state.userData },
-      data => {
-        // set roomId and switch to screenshare view
-        console.log('Server responded', data);
-        this.props.sessionRoom.id = data.id;
-        window.location = '#/screenshare';
-      });
+    // Send request to serverc
+    console.log(this.state.requestText);
+    if (this.state.requestText === '') {
+      this.setState({showAlert: {display: 'block', color: 'red'}});
+    } else {
+      console.log('Sending request', this.state.requestText);
+      e.preventDefault();
+      document.getElementById('text').value = '';
+      this.setState({ requestText: '' });
+      socket.emit('addRequest', { requestText: this.state.requestText, userData: this.state.userData },
+        data => {
+          // set roomId and switch to screenshare view
+          console.log('Server responded', data);
+          this.props.sessionRoom.id = data.id;
+          window.location = '#/screenshare';
+        });
+    }
   }
   updateRequestText(e) {
     // update state based on textbox change
@@ -70,6 +76,7 @@ class MainpageView extends React.Component {
               cols="49"
               onChange={this.updateRequestText}
             ></textarea><br></br>
+            <div className="h3" style={this.state.showAlert}>Please enter a valid request</div>
             <input type="submit" onClick={this.sendRequestText} value="Get Help Now!" />
           </div>
         </form>
