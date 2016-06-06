@@ -7,6 +7,8 @@
   io
 */
 
+const Link = ReactRouter.Link;
+
 const socket = io('/help-requests');
 class MainpageForm extends React.Component {
   constructor(props) {
@@ -49,7 +51,8 @@ class MainpageForm extends React.Component {
           console.log('Server responded', data);
           this.props.sessionRoom.id = data.id;
           console.log('sessionRoom', this.props.sessionRoom.id);
-          window.location = '#/screenshare';
+          return this.props.sessionRoom.id;
+          // window.location = '#/screenshare';
         });
     }
   }
@@ -90,16 +93,24 @@ class MainpageForm extends React.Component {
         </div>
         <div className="h3" style={this.state.showAlert}>Please enter a valid request</div>
         <div>
+        <Link to='/screenshare'>
           <button
             className="btn btn-success btn-block"
             type="submit"
             onClick={this.sendRequestText}
           >Get Help Now!</button>
+          </Link>
         </div>
       </form>
     ); }
 
 }
+
+// class getHelpButton extends React.Component {
+//   render() {
+//     return <Link to={this.props.to} />;
+//   }
+// }
 
 MainpageForm.propTypes = {
   userData: React.PropTypes.object.isRequired,

@@ -40,6 +40,7 @@ module.exports = io => {
         handler.findIndexOfProperty(helpRequestsQueue, 'id', roomID.roomID),
         1
       );
+
       socket.broadcast.emit('queueList', helpRequestsQueue);
     });
   });
