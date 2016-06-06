@@ -60,6 +60,7 @@ class ScreenShareView extends React.Component {
     comm.connect(room, { audio: true });
     // Remove peer stream when disconnected
     comm.on('disconnect', () => {
+      socket.emit('removeFromQueue', { roomID: helpRequest.id });
       that.refs.videoStream1.src = '';
       that.refs.videoStream2.src = '';
       comm.close();
@@ -76,9 +77,7 @@ class ScreenShareView extends React.Component {
     // comm.leave(true);
     // If room only has 1 person and person leaves
       // Then emit a dequeue to the server
-
-    console.log(comm);
-    comm.close();
+    comm.leave();
   }
 
   render() {
