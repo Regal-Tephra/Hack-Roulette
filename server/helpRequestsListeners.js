@@ -61,6 +61,7 @@ module.exports = io => {
     });
 
     socket.on('joinRoom', (message) => {
+      console.log('Got into join room!', message);
       User.findOne({ githubID: message.userInfo.githubID }, (err, userDataFromDB) => {
         if (err) {
           console.error(err);

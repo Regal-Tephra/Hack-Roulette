@@ -32,7 +32,7 @@ module.exports = (app, passport, handler) => {
     // TODO: Add feedback into the server
     console.log('Got stuff from feedback!');
     console.log(req.body);
-    handler.addFeedback(); // TODO: See what feedback is received
+    handler.addFeedback(req.body); // TODO: See what feedback is received
     res.status(200).json('Woo');
   });
   app.get('/logout', handler.logoutUser);

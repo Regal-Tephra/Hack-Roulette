@@ -40,6 +40,7 @@ class FeedbackView extends React.Component {
     const formData = {
       userData: this.props.userData,
       // TODO: Need to grab session ID information
+      // TODO Need to add data on the other user.
       sessionID: '',
       rating: this.state.rating,
       feedbackText: this.state.feedbackText,
@@ -74,7 +75,10 @@ class FeedbackView extends React.Component {
   render() {
     return (<div>
       <NavbarView />
-      <form className="text-center col-sm-6 col-sm-offset-3 form-container" onSubmit={this.handleSubmit}>
+      <form
+        className="text-center col-sm-6 col-sm-offset-3 form-container"
+        onSubmit={this.handleSubmit}
+      >
         <div className="form-group">
           <p> How would you rate your experience out of 5? </p>
           <label className="radio-inline">
