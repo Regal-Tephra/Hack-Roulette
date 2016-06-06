@@ -7,6 +7,8 @@
   io
 */
 
+const Link = ReactRouter.Link;
+
 const socket = io('/help-requests');
 class MainpageForm extends React.Component {
   constructor(props) {
@@ -64,7 +66,7 @@ class MainpageForm extends React.Component {
 
   render() {
     return (
-      <form className="form-horizontal ">
+      <form className="form-horizontal">
         <div className="form-group">
           <label className="col-sm-3 control-label">Programming Language</label>
           <div className="col-sm-9">
@@ -79,14 +81,15 @@ class MainpageForm extends React.Component {
         </div>
         <div className="form-group">
           <label className="col-sm-3 control-label">Description </label>
-          <div className="col-sm-9">
-            <textarea
-              id="text"
-              placeholder="e.g. looking for help with n-queens!"
-              rows="4"
-              onChange={this.updateRequestText}
-            ></textarea>
-          </div>
+          <textarea
+            id="text"
+            className="col-sm-9"
+            // className="col-lg"
+            placeholder="e.g. looking for help with n-queens!"
+            rows="4"
+            // cols="49"
+            onChange={this.updateRequestText}
+          ></textarea><br></br>
         </div>
         <div className="h3" style={this.state.showAlert}>Please enter a valid request</div>
         <div>
