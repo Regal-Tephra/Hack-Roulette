@@ -1,7 +1,7 @@
 'use strict';
 // const request = require('request');
 
-// const db = require('./data/db/config');
+const db = require('./data/db/config');
 const User = require('./data/db/models/user');
 
 exports.loggedInUser = (req, res) => {
@@ -21,7 +21,7 @@ exports.isLoggedIn = (req) => {
 };
 
 exports.isUser = (req, res, next) => {
-  console.log('req', req);
+  // console.log('req', req);
   if (exports.isLoggedIn(req)) {
     next();
   } else {
@@ -29,27 +29,37 @@ exports.isUser = (req, res, next) => {
   }
 };
 
-exports.addUser = (email) => {
-  User.find((err, userEmail) => {
+exports.addUser = (userProfile) => {
+  User.find({ githubID: userProfile.id }, (err, userData) => {
+    console.log('We got a response from the database');
     if (err) {
       console.error(err);
       return null;
     }
-
     // if email isn't in database, add new User entry, else do nothing
-    if (userEmail.length === 0) {
+    if (userData.length === 0) {
+
       // new user stored into a variable
-      const user = new User({ email });
+      const user = new User({
+        githubID: userProfile.id,
+        primaryEmail: userProfile.emails[0].value,
+        githubDisplayName: userProfile.displayName,
+        githubUsername: userProfile.username,
+        helpRequests: [],
+        helperSessions: [],
+        helperFeedback: [],
+      });
+      console.log('We are adding into db');
       // save the new user into the DB
       user.save((saveErr, newUser) => {
         if (err) {
           console.error(saveErr);
           return;
         }
-        console.log(`${newUser.email} has been added.`);
+        console.log(`${newUser} has been added.`);
       });
     } else {
-      console.log('User email already exists.');
+      console.log('User already exists.');
     }
     return null;
   });

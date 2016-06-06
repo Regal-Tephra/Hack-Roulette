@@ -75,6 +75,7 @@ class AppView extends React.Component {
       type: 'GET',
       success: (data) => {
         const parsedData = JSON.parse(data);
+        console.log(parsedData);
         this.setState(
           {
             userData: {
@@ -82,6 +83,7 @@ class AppView extends React.Component {
               profileUrl: parsedData.profileUrl,
               username: parsedData.username,
               avatar: parsedData._json.avatar_url,
+              githubID: parsedData.id,
             },
           }
         );

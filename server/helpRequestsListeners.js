@@ -1,5 +1,7 @@
 'use strict';
 const handler = require('./request-handler');
+const db = require('./data/db/config');
+const User = require('./data/db/models/user');
 
 const helpRequestsQueue = [];
 let helpRequestID = 0;
@@ -22,14 +24,37 @@ module.exports = io => {
     });
     socket.on('addRequest', (message, respond) => {
       // Add message to queue and respond with id so client can join room
-      console.log('This is the message received', message);
-      helpRequestsQueue.push({
+      console.log('This is the message received', message);    
+      // Add the help request to the queue  
+      const newHelpRequest = {
         id: ++helpRequestID,
         text: message.requestText,
         languageChosen: message.languageChosen,
         client1sessionID: message.client1sessionID,
         userData: message.userData,
+      };
+
+      helpRequestsQueue.push(newHelpRequest);
+
+      // Add the help request to the respective user
+
+      User.find({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
+        if (err) {
+          console.error(err);
+          return null;
+        }
+        // Make edits to the current user
+        console.log("This is the userData", userDataFromDB[0]);
+        userDataFromDB[0].helpRequests.push(newHelpRequest);
+        userDataFromDB[0].save((saveErr, newUser) => {
+          if (err) {
+            console.error(saveErr);
+            return;
+          }
+          console.log(`${newUser} has been updated.`);
+        });
       });
+
       console.log('help requests', helpRequestsQueue);
       respond({ id: helpRequestID });
       socket.broadcast.emit('queueList', helpRequestsQueue);
