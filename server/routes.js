@@ -1,5 +1,3 @@
-// const handlers = require('./request-handler.js');
-
 'use strict';
 module.exports = (app, passport, handler) => {
   app.get('/auth/github',
@@ -32,7 +30,14 @@ module.exports = (app, passport, handler) => {
     // TODO: Add feedback into the server
     console.log('Got stuff from feedback!');
     console.log(req.body);
-    handler.addFeedback(req.body); // TODO: See what feedback is received
+
+    // Handle feedback
+      // Send the name of the person
+      // Send the feedback that needs to be sent
+    const feedbackData = {
+
+    };
+    handler.addFeedback(feedbackData); // TODO: See what feedback is received
     res.status(200).json('Woo');
   });
   app.get('/logout', handler.logoutUser);

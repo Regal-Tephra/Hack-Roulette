@@ -6,16 +6,6 @@ const helpRequestsQueue = [];
 let helpRequestID = Math.floor(Math.random() * 10000);
 // start at a high number to allow testing with same api on multiple computers;
 
-
-    // Dealing with help request queue PSEUDOCODE
-    // Step 1: Listen for queue requests and save data down
-    // Step 2: Broadcast queueList out to all people and listen for response
-    // Step 3: When receive response, then emit to both Client 1 and Client 2 details of chat
-
-    // TODOS:
-    // 2. Get queue data to persist
-    // Need a way to close the room when player 1 leaves the chat
-
 module.exports = io => {
   io.of('/help-requests').on('connection', socket => {
     socket.on('getCurrentQueueList', () => {

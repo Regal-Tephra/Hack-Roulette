@@ -40,7 +40,7 @@ class FeedbackView extends React.Component {
     const formData = {
       userData: this.props.userData,
       // TODO: Need to grab session ID information
-      // TODO Need to add data on the other user.
+      // TODO Need to add data on the other user or user that the feedback needs to be sent to
       sessionID: '',
       rating: this.state.rating,
       feedbackText: this.state.feedbackText,
