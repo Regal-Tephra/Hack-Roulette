@@ -48,7 +48,7 @@ class HelperView extends React.Component {
       <div>
         <NavbarView />
         <div>
-          <div className='text-center'>
+          <div className="text-center form-container">
             <span>Latest Help Requests</span>
           </div>
           <br></br>

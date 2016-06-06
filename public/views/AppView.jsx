@@ -98,13 +98,11 @@ class AppView extends React.Component {
    // use this to block routes if not logged in
    // may have to add state to login page.
   }
-  // {this.pages[this.state.currentPage]}
-  // TODO: Build in navbar toggle
   render() {
     // pass user data in as a prop on
+    // <div className="title">Hack Roulette</div>
     return (
-      <div className="container">
-        <div className="title">Hack Roulette</div>
+      <div className="container" id="appContainer">
         <Router>
           <Route
             onEnter={this.requireAuth}
@@ -116,7 +114,8 @@ class AppView extends React.Component {
           />
           <Route
             onEnter={this.requireAuth}
-            path="/login" component={this.views.landingpage} />
+            path="/login" component={this.views.landingpage}
+          />
           <Route
             onEnter={this.requireAuth}
             path="/feedback" component={this.views.feedback}
@@ -131,14 +130,6 @@ class AppView extends React.Component {
     );
   }
 }
-
-// ScreenShareView Wrapper to Include PROPS
-
-/* 
-        <footer className="footer container-fluid text-center">
-          <p className="col-lg-8">{"Made with <3"}</p>
-        </footer>
-*/
 
 
 ReactDOM.render(<AppView />, document.getElementById('app'));

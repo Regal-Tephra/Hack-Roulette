@@ -4,12 +4,6 @@
 */
 // class LandingPageView extends React.Component {
 
-// Landing Page
-  // Add background photo
-  // Add some copy / upperText
-  // Make the signup button a green button
-
-
 function LandingPageView(props) {
   console.log(props);
   return (
