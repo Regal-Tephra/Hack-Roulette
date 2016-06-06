@@ -22,7 +22,7 @@ class ScreenShareView extends React.Component {
     super(props);
 
     const room = `room-${this.props.room}`;
-    console.log('inside room#' + this.props.room);
+    console.log('inside room#'.concat(this.props.room));
     // this.room = this.props.room;
 
     this.state = {
@@ -34,6 +34,7 @@ class ScreenShareView extends React.Component {
     };
     console.log('Screenshare userdata: ', this.props.userData);
     this.editorUpdated = this.editorUpdated.bind(this);
+    this.handleVideo = this.handleVideo.bind(this);
     console.log('joining room', room);
 
     // join room retrieve room data 2 ways
@@ -73,7 +74,7 @@ class ScreenShareView extends React.Component {
     // Unqueues when if user closes the window
     window.onbeforeunload = () => {
       socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
-    }
+    };
   }
 
   editorUpdated(event) {
@@ -83,7 +84,7 @@ class ScreenShareView extends React.Component {
   }
 
   handleVideo() {
-    socketHelperQueue.emit('removeFromQueue', {roomID: this.props.room});
+    socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
     comm.leave();
   }
 
@@ -91,7 +92,7 @@ class ScreenShareView extends React.Component {
     console.log(this.state.text);
     return (
       <div>
-        <NavbarView videoHandler={this.handleVideo.bind(this)} />
+        <NavbarView videoHandler={this.handleVideo} />
         <div className="col-md-6">
           <div className="text-center bg-primary">
             Shared Text Editor

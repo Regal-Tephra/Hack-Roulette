@@ -1,6 +1,5 @@
 'use strict';
 const handler = require('./request-handler');
-const db = require('./data/db/config');
 const User = require('./data/db/models/user');
 
 const helpRequestsQueue = [];
@@ -51,7 +50,7 @@ module.exports = io => {
             console.error(saveErr);
             return;
           }
-          console.log(`${newUser} has been updated.`);
+          console.log(`${newUser} help requests has been updated.`);
         });
         return null;
       });
@@ -60,6 +59,27 @@ module.exports = io => {
       respond({ id: helpRequestID });
       socket.broadcast.emit('queueList', helpRequestsQueue);
     });
+
+    socket.on('joinRoom', (message) => {
+      User.findOne({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
+        if (err) {
+          console.error(err);
+          return null;
+        }
+        // Make edits to the current user
+        console.log('This is the userData', userDataFromDB);
+        userDataFromDB.helperSessions.push(message.helpInfo);
+        userDataFromDB.save((saveErr, newUser) => {
+          if (err) {
+            console.error(saveErr);
+            return;
+          }
+          console.log(`${newUser} helper Session has been updated.`);
+        });
+        return null;
+      });
+    });
+
     // On a join room request from a helper, remove that listing from the queue
     socket.on('removeFromQueue', (roomID) => {
       helpRequestsQueue.splice(

@@ -38,8 +38,7 @@ class FeedbackView extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const formData = {
-      // TODO: Need to grab user information
-      user: '',
+      userData: this.props.userData,
       // TODO: Need to grab session ID information
       sessionID: '',
       rating: this.state.rating,
@@ -56,8 +55,6 @@ class FeedbackView extends React.Component {
           rating: '',
           feedbackText: '',
         });
-        // TODO Uncheck all the boxes
-        // TODO: This method actually isn't changing the page itself
         window.location = '#/';
       }.bind(this),
       error: (err) => {
