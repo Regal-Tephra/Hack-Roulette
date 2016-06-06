@@ -36,7 +36,6 @@ module.exports = io => {
       helpRequestsQueue.push(newHelpRequest);
 
       // Add the help request to the respective user
-
       User.findOne({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
         if (err) {
           console.error(err);

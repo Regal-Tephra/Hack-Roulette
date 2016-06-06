@@ -50,7 +50,7 @@ class HelperView extends React.Component {
                 key={key}
                 onClick={() => {
                   this.props.sessionRoom.id = helpRequest.id;
-                  socket.emit('joinRoom', { userInfo: this.props.userData, helpInfo: helpRequest });
+                  socket.emit('joinRoom', { userData: this.props.userData, helpInfo: helpRequest });
                   socket.emit('removeFromQueue', { roomID: helpRequest.id });
                 }}
               >

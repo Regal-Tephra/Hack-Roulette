@@ -74,7 +74,6 @@ class AppView extends React.Component {
       type: 'GET',
       success: (data) => {
         const parsedData = JSON.parse(data);
-        console.log(parsedData);
         this.setState(
           {
             userData: {
