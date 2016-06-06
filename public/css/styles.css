@@ -15,7 +15,18 @@ body {
 textarea {
   width: 100%;
 }
-
+.logo {
+  margin-top: 5px;
+  margin-left: 5px;
+  height: 38px;
+}
+.navbar {
+  display: flex;
+  flex-direction: row;
+}
+.navbar-buttons {
+  flex-grow: 1;
+}
 .login-button {
   margin-left: auto;
   margin-right: auto;
@@ -56,7 +67,9 @@ textarea {
   background-color: #EEE;
   box-shadow: 1px 2px 2px 3px rgba(0, 0, 0, 0.15);
 }
-
+.light-theme-background: {
+  background-color: #EEE;
+}
 #appContainer {
   padding: 0px;
 }
