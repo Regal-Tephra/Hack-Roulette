@@ -16,11 +16,14 @@
 const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
 const Link = ReactRouter.Link;
 const socket = io('/screenshare');
+const socketHelperQueue = io('/help-requests');
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
 
     const room = `room-${this.props.room}`;
+    console.log('inside room#' + this.props.room);
+    // this.room = this.props.room;
 
     this.state = {
       text: '',
@@ -60,11 +63,17 @@ class ScreenShareView extends React.Component {
     comm.connect(room, { audio: true });
     // Remove peer stream when disconnected
     comm.on('disconnect', () => {
-      socket.emit('removeFromQueue', { roomID: helpRequest.id });
-      that.refs.videoStream1.src = '';
-      that.refs.videoStream2.src = '';
-      comm.close();
+      console.log('inside!');
+      socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
+      // that.refs.videoStream1.src = '';
+      // that.refs.videoStream2.src = '';
+      // comm.close();
     });
+
+    // Unqueues when if user closes the window
+    window.onbeforeunload = () => {
+      socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
+    }
   }
 
   editorUpdated(event) {
@@ -74,9 +83,7 @@ class ScreenShareView extends React.Component {
   }
 
   handleVideo() {
-    // comm.leave(true);
-    // If room only has 1 person and person leaves
-      // Then emit a dequeue to the server
+    socketHelperQueue.emit('removeFromQueue', {roomID: this.props.room});
     comm.leave();
   }
 
@@ -84,7 +91,7 @@ class ScreenShareView extends React.Component {
     console.log(this.state.text);
     return (
       <div>
-        <NavbarView videoHandler={this.handleVideo} />
+        <NavbarView videoHandler={this.handleVideo.bind(this)} />
         <div className="col-md-6">
           <div className="text-center bg-primary">
             Shared Text Editor
@@ -103,8 +110,8 @@ class ScreenShareView extends React.Component {
         </div>
         <div>
           <br />
-          <button className="btn btn-block btn-default" >
-            <Link to="/feedback">
+          <button className="btn btn-block btn-default">
+            <Link to="/feedback" >
               Complete Session
             </Link>
           </button>
