@@ -35,6 +35,8 @@ class MainpageView extends React.Component {
       <div>
         <NavbarView />
         <div className="col-md-5 col-md-offset-6">
+          <div className="text-center">Get Help now!</div>
+          <br></br>
           <MainpageForm
             userData={this.props.userData}
             sessionRoom={this.props.sessionRoom}

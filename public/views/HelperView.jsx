@@ -56,11 +56,18 @@ class HelperView extends React.Component {
                 }}
               >
                 <div className="pull-left col-sm-2">
-                  <img src={helpRequest.userData.avatar} alt={helpRequest.userData.username} class="img-thumbnail" height="100" width="100"></img>
+                  <img
+                    src={helpRequest.userData.avatar}
+                    alt={helpRequest.userData.username}
+                    className="img-thumbnail"
+                    height="100"
+                    width="100"
+                  ></img>
                 </div>
                 <Link className="col-sm-10" to="/screenshare">
                   <div className="h2 bold">{helpRequest.text}</div>
                   <div>Requested By: {helpRequest.userData.displayName || 'Anonymous'}</div>
+                  <div>Language: {helpRequest.languageChosen} </div>
                   <div>Time: [5 minutes ago] </div>
                 </Link>
               </li>)
