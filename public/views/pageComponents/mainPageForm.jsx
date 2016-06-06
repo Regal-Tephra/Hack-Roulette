@@ -17,6 +17,7 @@ class MainpageForm extends React.Component {
       requestText: '',
       userData: this.props.userData,
       showAlert: { display: 'none' },
+      language: '',
     };
     console.log('Mainpage userdata: ', this.props.userData);
     this.updateRequestText = this.updateRequestText.bind(this);
@@ -27,7 +28,7 @@ class MainpageForm extends React.Component {
     // Send request to serverc
     console.log(this.state.requestText);
     if (this.state.requestText === '') {
-      this.setState({showAlert: {display: 'block', color: 'red'}});
+      this.setState({ showAlert: { display: 'block', color: 'red' } });
     } else {
       console.log('Sending request', this.state.requestText);
       e.preventDefault();
@@ -38,6 +39,7 @@ class MainpageForm extends React.Component {
           // set roomId and switch to screenshare view
           console.log('Server responded', data);
           this.props.sessionRoom.id = data.id;
+          console.log('sessionRoom', this.props.sessionRoom.id);
           window.location = '#/screenshare';
         });
     }
