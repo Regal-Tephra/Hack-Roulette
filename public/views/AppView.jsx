@@ -22,11 +22,13 @@ class AppView extends React.Component {
     super(props);
 
     this.handleMainSubmit = this.handleMainSubmit.bind(this);
+    this.handleScreenSharePeerData = this.handleScreenSharePeerData.bind(this);
 
     // State will control ScreenShareView's render
     this.state = {
       sessionData: {},
       userData: {},
+      peerData: {},
       sessionRoom: { id: 5 },
     };
     this.checkLogin();
@@ -36,6 +38,7 @@ class AppView extends React.Component {
           sessionData={this.state.sessionData}
           userData={this.state.userData}
           room={this.state.sessionRoom.id}
+          handleScreenSharePeerData={this.handleScreenSharePeerData}
         />,
       helper: () =>
         <HelperView
@@ -74,6 +77,13 @@ class AppView extends React.Component {
     this.setState({ sessionData: data });
     this.forceUpdate();
   }
+
+  handleScreenSharePeerData(peerData) {
+    this.setState({ peerData: peerData });
+    console.log("Peer Data has been updated in AppView!", this.state.peerData);
+    this.forceUpdate();
+  }
+
   checkLogin() {
     $.ajax({
       url: '/loginCheck',
@@ -102,8 +112,6 @@ class AppView extends React.Component {
 
 
   render() {
-    // pass user data in as a prop on
-    // <div className="title">Hack Roulette</div>
     return (
       <div className="container" id="appContainer">
         <Router>

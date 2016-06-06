@@ -27,8 +27,7 @@ class ScreenShareView extends React.Component {
 
     this.state = {
       text: '',
-      user1: this.props.sessionData.client1ID || 'NOT EXISTING',
-      user2: this.props.sessionData.client2ID || 'NOT EXISTING',
+      peerData: '',
       showVideo: true,
       userData: this.props.userData,
     };
@@ -56,6 +55,7 @@ class ScreenShareView extends React.Component {
 
     comm.on('data', (peer) => {
       this.setState({ peerData: peer.data });
+      this.props.handleScreenSharePeerData(peer.data);
     });
 
     comm.connect(room, { audio: true });
@@ -121,6 +121,7 @@ ScreenShareView.propTypes = {
   userData: React.PropTypes.object.isRequired,
   room: React.PropTypes.number.isRequired,
   userId: React.PropTypes.number.isRequired,
+  handleScreenSharePeerData: React.PropTypes.func.isRequired,
 };
 window.ScreenShareView = ScreenShareView;
 // videoHandler={this.handleVideo.bind(this)}

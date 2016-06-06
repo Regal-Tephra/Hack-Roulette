@@ -39,12 +39,12 @@ class FeedbackView extends React.Component {
     e.preventDefault();
     const formData = {
       userData: this.props.userData,
-      // TODO: Need to grab session ID information
-      // TODO Need to add data on the other user or user that the feedback needs to be sent to
-      sessionID: '',
+      peerData: this.props.peerData,
       rating: this.state.rating,
       feedbackText: this.state.feedbackText,
     };
+    console.log("This is the form data", formData);
+
     $.ajax({
       url: '/feedback',
       dataType: 'json',
@@ -148,5 +148,6 @@ class FeedbackView extends React.Component {
 
 FeedbackView.propTypes = {
   userData: React.PropTypes.object.isRequired,
+  peerData: React.PropTypes.object.isRequired,
 };
 window.FeedbackView = FeedbackView;
