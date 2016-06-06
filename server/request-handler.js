@@ -1,7 +1,7 @@
 'use strict';
 // const request = require('request');
 
-const db = require('./data/db/config');
+// const db = require('./data/db/config');
 const User = require('./data/db/models/user');
 
 exports.loggedInUser = (req, res) => {
@@ -38,7 +38,6 @@ exports.addUser = (userProfile) => {
     }
     // if email isn't in database, add new User entry, else do nothing
     if (userData.length === 0) {
-
       // new user stored into a variable
       const user = new User({
         githubID: userProfile.id,

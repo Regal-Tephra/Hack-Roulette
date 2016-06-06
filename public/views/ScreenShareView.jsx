@@ -22,7 +22,7 @@ class ScreenShareView extends React.Component {
     super(props);
 
     const room = `room-${this.props.room}`;
-    console.log('inside room#'.concat(this.props.room));
+    console.log(`inside room# ${this.props.room}`);
     // this.room = this.props.room;
 
     this.state = {
@@ -37,28 +37,20 @@ class ScreenShareView extends React.Component {
     this.handleVideo = this.handleVideo.bind(this);
     console.log('joining room', room);
 
-    // join room retrieve room data 2 ways
-    // (switching views and refreshing new view has 2 different routes)
-    // socket.on('connect', () => console.log('join in connect') || socket.emit('join-room', room));
     socket.emit('join-room', room);
 
     socket.on('text change', text => this.setState({ text }));
-    socket.emit('connectUser', this.props.userId);
-
-    // Icecomm Video Chat. In the future, we can decide which room each person joins.
-    const that = this;
 
     // Connecting local stream
     comm.on('local', (local) => {
       console.log('Connected to Local!');
-      that.refs.localStream1.src = local.stream;
+      this.refs.localStream1.src = local.stream;
     });
 
     // Connecting remote stream
     comm.on('connected', (peer) => {
       console.log('This is what we get when a peer connects: ', peer);
-      that.refs.peerStream2.src = peer.stream;
-      that.refs.peerStream2.src.id = peer.ID;
+      this.refs.peerStream2.src = peer.stream;
     });
 
     comm.connect(room, { audio: true });
@@ -66,9 +58,6 @@ class ScreenShareView extends React.Component {
     comm.on('disconnect', () => {
       console.log('inside!');
       socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
-      // that.refs.videoStream1.src = '';
-      // that.refs.videoStream2.src = '';
-      // comm.close();
     });
 
     // Unqueues when if user closes the window
