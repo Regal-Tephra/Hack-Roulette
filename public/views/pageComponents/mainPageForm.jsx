@@ -15,9 +15,10 @@ class MainpageForm extends React.Component {
     this.state = {
       queueStatus: false,
       requestText: '',
-      languageChosen: '',
+      languageChosen: 'Javascript',
       userData: this.props.userData,
       showAlert: { display: 'none' },
+      language: '',
     };
     console.log('Mainpage userdata: ', this.props.userData);
     this.updateRequestText = this.updateRequestText.bind(this);
@@ -47,6 +48,7 @@ class MainpageForm extends React.Component {
           // set roomId and switch to screenshare view
           console.log('Server responded', data);
           this.props.sessionRoom.id = data.id;
+          console.log('sessionRoom', this.props.sessionRoom.id);
           window.location = '#/screenshare';
         });
     }

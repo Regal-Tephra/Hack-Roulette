@@ -91,6 +91,11 @@ html, body, .app {
   background-color: grey;
 }
 
+.vertical-center1 {
+  display: flex;
+  align-items: center;
+}
+
 /* Wrapper for page content to push down footer */
 .wrap {
   min-height: 100%;
