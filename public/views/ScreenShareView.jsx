@@ -13,7 +13,7 @@
   // 2. Get the reason for help onto the page as well
 
 // Need to remove API Key.
-const comm = new Icecomm('3VnlMbNVtaQ17iOJu8zt22nMojgdnPcaR14nTGAaykJbObGKC');
+const comm = new Icecomm('WLowOG2uYovkPa4dSAuyEdBhKVlUFSFZFjp8bMmG0wSeeLLVzO');
 const Link = ReactRouter.Link;
 const socket = io('/screenshare');
 const socketHelperQueue = io('/help-requests');
@@ -50,7 +50,12 @@ class ScreenShareView extends React.Component {
     // Connecting remote stream
     comm.on('connected', (peer) => {
       console.log('This is what we get when a peer connects: ', peer);
+      comm.send(this.props.userData);
       this.refs.peerStream2.src = peer.stream;
+    });
+
+    comm.on('data', (peer) => {
+      this.setState({ peerData: peer.data });
     });
 
     comm.connect(room, { audio: true });
