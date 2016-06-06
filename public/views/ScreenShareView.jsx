@@ -85,10 +85,6 @@ class ScreenShareView extends React.Component {
   handleVideo() {
     socketHelperQueue.emit('removeFromQueue', {roomID: this.props.room});
     comm.leave();
-
-    // If room only has 1 person and person leaves
-      // Then emit a dequeue to the server
-    // comm.leave();
   }
 
   render() {
@@ -114,8 +110,8 @@ class ScreenShareView extends React.Component {
         </div>
         <div>
           <br />
-          <button className="btn btn-block btn-default" >
-            <Link to="/feedback">
+          <button className="btn btn-block btn-default">
+            <Link to="/feedback" >
               Complete Session
             </Link>
           </button>
