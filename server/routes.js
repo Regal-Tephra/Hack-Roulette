@@ -1,3 +1,5 @@
+// const handlers = require('./request-handler.js');
+
 'use strict';
 module.exports = (app, passport, handler) => {
   app.get('/auth/github',
@@ -8,12 +10,16 @@ module.exports = (app, passport, handler) => {
     passport.authenticate('github', { failureRedirect: '/login' }),
     handler.loggedInUser
   );
+
   app.get('/addUser', handler.isUser, (req, res) => {
-    handler.addUser(req.user.emails[0].value);
+    console.log(req.user);
+    console.log('We are getting into addUser');
+    handler.addUser(req.user);
     res.redirect('/');
   });
+
   app.get('/loginCheck', (req, res) => {
-    console.log(req.user);
+    // console.log(req.user);
     let data = '';
     req.on('data', d => {
       data = d + data;

@@ -7,14 +7,6 @@
   io
 */
 
-// const Link = ReactRouter.Link;
-
-// TODOS:
-  // Show Loading Page after CLIENT1 presses "Submit button"
-  // Send over Client1 userID information
-  // When the server finishes loading or finds a match, send to
-    // the screenshare page
-
   // TODO: Need to show loading page
   // PSEUDOCODE:
     // Step 1: Emit to Server and Show Loading View
