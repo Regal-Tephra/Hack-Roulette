@@ -15,6 +15,7 @@ class MainpageForm extends React.Component {
     this.state = {
       queueStatus: false,
       requestText: '',
+      languageChosen: 'Javascript',
       userData: this.props.userData,
       showAlert: { display: 'none' },
       language: '',
@@ -22,6 +23,7 @@ class MainpageForm extends React.Component {
     console.log('Mainpage userdata: ', this.props.userData);
     this.updateRequestText = this.updateRequestText.bind(this);
     this.sendRequestText = this.sendRequestText.bind(this);
+    this.updateLanguage = this.updateLanguage.bind(this);
   }
 
   sendRequestText(e) {
@@ -34,7 +36,14 @@ class MainpageForm extends React.Component {
       e.preventDefault();
       document.getElementById('text').value = '';
       this.setState({ requestText: '' });
-      socket.emit('addRequest', { requestText: this.state.requestText, userData: this.state.userData },
+
+      const dataToSend = {
+        requestText: this.state.requestText,
+        userData: this.state.userData,
+        languageChosen: this.state.languageChosen,
+      };
+      console.log('data being sent', dataToSend);
+      socket.emit('addRequest', dataToSend,
         data => {
           // set roomId and switch to screenshare view
           console.log('Server responded', data);
@@ -49,13 +58,17 @@ class MainpageForm extends React.Component {
     this.setState({ requestText: e.target.value });
   }
 
+  updateLanguage(e) {
+    this.setState({ languageChosen: e.target.value });
+  }
+
   render() {
     return (
       <form className="form-horizontal">
         <div className="form-group">
           <label className="col-sm-3 control-label">Programming Language</label>
           <div className="col-sm-9">
-            <select className="form-control">
+            <select className="form-control" onChange={this.updateLanguage}>
               <option>Javascript</option>
               <option>Ruby</option>
               <option>C+</option>

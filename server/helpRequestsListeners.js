@@ -22,9 +22,11 @@ module.exports = io => {
     });
     socket.on('addRequest', (message, respond) => {
       // Add message to queue and respond with id so client can join room
+      console.log('This is the message received', message);
       helpRequestsQueue.push({
         id: ++helpRequestID,
         text: message.requestText,
+        languageChosen: message.languageChosen,
         client1sessionID: message.client1sessionID,
         userData: message.userData,
       });

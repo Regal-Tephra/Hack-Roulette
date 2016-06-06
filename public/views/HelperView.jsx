@@ -16,13 +16,19 @@ class HelperView extends React.Component {
       connected: false,
       list: [],
       userData: this.props.userData,
+      showNone: { display: 'none' },
     };
+
     console.log('Helper userdata: ', this.props.userData);
     socket.on('connect', () => socket.emit('getCurrentQueueList'));
     socket.emit('getCurrentQueueList');
     socket.on('queueList', queueListArray => {
       console.log(queueListArray);
-      this.setState({ list: queueListArray });
+      if (queueListArray.length === 0) {
+        this.setState({ list: queueListArray, showNone: { display: 'inline' } });
+      } else {
+        this.setState({ list: queueListArray, showNone: { display: 'none' } });
+      }
     });
   }
 
@@ -37,12 +43,13 @@ class HelperView extends React.Component {
 
 // TRY TO PRINT QUEUELISTARRAY DOWN THERE
   render() {
+    // If there are no items on the list, display a photo
     return (
       <div>
         <NavbarView />
         <div>
           <div className='text-center'>
-          <span>Latest Help Requests</span>
+            <span>Latest Help Requests</span>
           </div>
           <br></br>
           <ul className="list-group">
@@ -56,16 +63,31 @@ class HelperView extends React.Component {
                 }}
               >
                 <div className="pull-left col-sm-2">
-                  <img src={helpRequest.userData.avatar || 'https://avatars2.githubusercontent.com/u/16586644?v=3&s=400'} alt={helpRequest.userData.username} class="img-thumbnail" height="100" width="100"></img>
+                  <img
+                    src={helpRequest.userData.avatar || 'https://avatars2.githubusercontent.com/u/16586644?v=3&s=400'}
+                    alt={helpRequest.userData.username}
+                    className="img-thumbnail"
+                    height="100"
+                    width="100"
+                  ></img>
                 </div>
                 <Link className="col-sm-10" to="/screenshare">
                   <div className="h2 bold">{helpRequest.text}</div>
                   <div>Requested By: {helpRequest.userData.displayName || 'Anonymous'}</div>
+                  <div>Language: {helpRequest.languageChosen} </div>
                   <div>Time: [5 minutes ago] </div>
                 </Link>
               </li>)
             )}
           </ul>
+        </div>
+        <div className="text-center">
+          <img
+            src="../img/nohelpneeded.jpg"
+            alt="No Help Needed"
+            style={this.state.showNone}
+          >
+          </img>
         </div>
       </div>
   );
