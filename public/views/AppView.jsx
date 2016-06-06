@@ -22,7 +22,6 @@ class AppView extends React.Component {
     super(props);
 
     this.handleMainSubmit = this.handleMainSubmit.bind(this);
-    this.requireAuth = this.requireAuth.bind(this);
 
     // State will control ScreenShareView's render
     this.state = {
@@ -96,37 +95,18 @@ class AppView extends React.Component {
     window.location = 'auth/github';
   }
 
-  requireAuth(nextState, replaceState) {
-   // use this to block routes if not logged in
-   // may have to add state to login page.
-  }
+
   render() {
     // pass user data in as a prop on
     // <div className="title">Hack Roulette</div>
     return (
       <div className="container" id="appContainer">
-      <div>{this.state.userData.displayName}</div>
         <Router>
-          <Route
-            onEnter={this.requireAuth}
-            path="/" component={this.views.mainpage}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/screenshare" component={this.views.screenshare}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/login" component={this.views.landingpage}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/feedback" component={this.views.feedback}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/helper" component={this.views.helper}
-          />
+          <Route path="/" component={this.views.mainpage} />
+          <Route path="/screenshare" component={this.views.screenshare} />
+          <Route path="/login" component={this.views.landingpage} />
+          <Route path="/feedback" component={this.views.feedback} />
+          <Route path="/helper" component={this.views.helper} />
         </Router>
 
       </div>

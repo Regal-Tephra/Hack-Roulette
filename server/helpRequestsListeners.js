@@ -1,6 +1,6 @@
 'use strict';
 const handler = require('./request-handler');
-const db = require('./data/db/config');
+// const db = require('./data/db/config');
 const User = require('./data/db/models/user');
 
 const helpRequestsQueue = [];
