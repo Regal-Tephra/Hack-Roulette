@@ -29,11 +29,12 @@ module.exports = io => {
         userData: message.userData,
       });
       respond({ id: helpRequestID });
+      socket.broadcast.emit('queueList', helpRequestsQueue);
     });
-
     // On a join room request from a helper, remove that listing from the queue
     socket.on('removeFromQueue', (roomID) => {
       helpRequestsQueue.splice(handler.findIndexOfProperty(helpRequestsQueue, 'id', roomID), 1);
+      socket.broadcast.emit('queueList', helpRequestsQueue);
     });
   });
 };
