@@ -3,7 +3,8 @@ const handler = require('./request-handler');
 const User = require('./data/db/models/user');
 
 const helpRequestsQueue = [];
-let helpRequestID = 0;
+let helpRequestID = Math.floor(Math.random() * 10000);
+// start at a high number to allow testing with same api on multiple computers;
 
 
     // Dealing with help request queue PSEUDOCODE

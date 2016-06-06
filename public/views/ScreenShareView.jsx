@@ -55,7 +55,7 @@ class ScreenShareView extends React.Component {
     });
 
     comm.on('data', (peer) => {
-      console.log('this is other users data', peer.data);
+      this.setState({ peerData: peer.data });
     });
 
     comm.connect(room, { audio: true });
