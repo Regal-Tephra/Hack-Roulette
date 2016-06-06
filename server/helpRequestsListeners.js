@@ -36,7 +36,10 @@ module.exports = io => {
     });
     // On a join room request from a helper, remove that listing from the queue
     socket.on('removeFromQueue', (roomID) => {
-      helpRequestsQueue.splice(handler.findIndexOfProperty(helpRequestsQueue, 'id', roomID.roomID), 1);
+      helpRequestsQueue.splice(
+        handler.findIndexOfProperty(helpRequestsQueue, 'id', roomID.roomID),
+        1
+      );
       socket.broadcast.emit('queueList', helpRequestsQueue);
     });
   });
