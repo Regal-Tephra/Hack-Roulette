@@ -66,7 +66,6 @@ class AppView extends React.Component {
   }
 
   handleMainSubmit(data) {
-    // WE ARE GOOD HERE
     this.setState({ sessionData: data });
     this.forceUpdate();
   }
