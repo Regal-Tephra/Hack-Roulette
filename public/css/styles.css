@@ -1,10 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Pontano+Sans|Rock+Salt);
 html {
   box-sizing: border-box;
-  font-family: 'Pontano Sans', sansserif;
 }
 html, body, .app {
   height: 100%;
+  font-family: 'Pontano Sans', sansserif;
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -15,8 +15,39 @@ body {
 textarea {
   width: 100%;
 }
+.logo {
+  margin-top: 5px;
+  margin-left: 5px;
+  height: 38px;
+}
+.navbar {
+  display: flex;
+  flex-direction: row;
+}
+.navbar-buttons {
+  flex-grow: 1;
+}
+.help-request-container {
+  display: flex;
+  flex-direction: row;
 
-.login-button {
+}
+.help-request-details {
+  padding: 0 22px;
+  flex-grow: 1;
+}
+.help-request-detail-text {
+  margin-top: 8px;
+  line-height: 20px;
+}
+.no-margin {
+  margin: 0;
+}
+.img-thumbnail {
+  width: 100px;
+  height: 100px;
+}
+/*.login-button {
   margin-left: auto;
   margin-right: auto;
   padding-top: 9px;
@@ -39,7 +70,7 @@ textarea {
 }
 .login-button-wrapper:hover .login-button {
   transform: rotate(0deg);
-}
+}*/
 .container {
   /*padding: 20px 5px;*/
 /*  border-left: 2px #333 dotted;
@@ -56,7 +87,9 @@ textarea {
   background-color: #EEE;
   box-shadow: 1px 2px 2px 3px rgba(0, 0, 0, 0.15);
 }
-
+.light-theme-background: {
+  background-color: #EEE;
+}
 #appContainer {
   padding: 0px;
 }

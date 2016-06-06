@@ -103,6 +103,7 @@ class AppView extends React.Component {
     // <div className="title">Hack Roulette</div>
     return (
       <div className="container" id="appContainer">
+      <div>{this.state.userData.displayName}</div>
         <Router>
           <Route
             onEnter={this.requireAuth}

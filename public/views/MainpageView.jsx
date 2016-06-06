@@ -34,8 +34,8 @@ class MainpageView extends React.Component {
     return (
       <div>
         <NavbarView />
-        <div className="text-center col-md-5 col-md-offset-3 form-container">
-          <div className="text-center">Get Help Now</div>
+        <div className="text-center col-md-6 col-md-offset-3 form-container">
+          <div className="text-center"><h2>Get Help Now</h2></div>
           <br></br>
           <MainpageForm
             userData={this.props.userData}
