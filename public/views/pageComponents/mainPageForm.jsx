@@ -16,7 +16,6 @@ class MainpageForm extends React.Component {
       queueStatus: false,
       requestText: '',
       languageChosen: 'Javascript',
-      userData: this.props.userData,
       showAlert: { display: 'none' },
       language: '',
     };
@@ -28,7 +27,7 @@ class MainpageForm extends React.Component {
 
   sendRequestText(e) {
     // Send request to serverc
-    console.log(this.state.requestText);
+    console.log(this.props.userData);
     if (this.state.requestText === '') {
       this.setState({ showAlert: { display: 'block', color: 'red' } });
     } else {
@@ -39,7 +38,7 @@ class MainpageForm extends React.Component {
 
       const dataToSend = {
         requestText: this.state.requestText,
-        userData: this.state.userData,
+        userData: this.props.userData,
         languageChosen: this.state.languageChosen,
       };
       console.log('data being sent', dataToSend);

@@ -49,37 +49,39 @@ class HelperView extends React.Component {
         <NavbarView />
         <div>
           <div className="text-center form-container">
-            <span>Latest Help Requests</span>
+            <h2>Latest Help Requests</h2>
           </div>
           <br></br>
-          <ul className="list-group">
+          <div className="list-group">
             {this.state.list.map((helpRequest, key) =>
-              (<li
-                className="list-group-item clearfix subcontainer"
+              (<div
+                className="list-group-item clearfix subcontainer help-request-container"
                 key={key}
                 onClick={() => {
                   this.props.sessionRoom.id = helpRequest.id;
                   socket.emit('removeFromQueue', { roomID: helpRequest.id });
                 }}
               >
-                <div className="pull-left col-sm-2">
+                <div>
                   <img
                     src={helpRequest.userData.avatar || 'https://avatars2.githubusercontent.com/u/16586644?v=3&s=400'}
                     alt={helpRequest.userData.username}
                     className="img-thumbnail"
-                    height="100"
-                    width="100"
                   ></img>
                 </div>
-                <Link className="col-sm-10" to="/screenshare">
-                  <div className="h2 bold">{helpRequest.text}</div>
-                  <div>Requested By: {helpRequest.userData.displayName || 'Anonymous'}</div>
-                  <div>Language: {helpRequest.languageChosen} </div>
-                  <div>Time: [5 minutes ago] </div>
-                </Link>
-              </li>)
+                <div className="help-request-details">
+                  <Link to="/screenshare">
+                    <div className="h2 bold no-margin">{helpRequest.text}</div>
+                    <div className="help-request-detail-text">
+                      <div>Requested By: {helpRequest.userData.displayName || 'Anonymous'}</div>
+                      <div>Language: {helpRequest.languageChosen} </div>
+                      <div>Time: [5 minutes ago] </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>)
             )}
-          </ul>
+          </div>
         </div>
         <div className="text-center">
           <img
