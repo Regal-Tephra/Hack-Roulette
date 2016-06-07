@@ -8,11 +8,7 @@
    io
    */
 
-// SCREENSHARE TODOS:
-  // 1. Get client1 and client2 information into the page
-  // 2. Get the reason for help onto the page as well
-
-// Need to remove API Key.
+// Need to remove API Key
 const comm = new Icecomm('WLowOG2uYovkPa4dSAuyEdBhKVlUFSFZFjp8bMmG0wSeeLLVzO');
 const Link = ReactRouter.Link;
 const socket = io('/screenshare');
@@ -23,7 +19,6 @@ class ScreenShareView extends React.Component {
 
     const room = `room-${this.props.room}`;
     console.log(`inside room# ${this.props.room}`);
-    // this.room = this.props.room;
 
     this.state = {
       text: '',
@@ -31,45 +26,37 @@ class ScreenShareView extends React.Component {
       showVideo: true,
       userData: this.props.userData,
     };
-    console.log('Screenshare userdata: ', this.props.userData);
-    this.editorUpdated = this.editorUpdated.bind(this);
-    this.handleVideo = this.handleVideo.bind(this);
-    console.log('joining room', room);
-
     socket.emit('join-room', room);
-
     socket.on('text change', text => this.setState({ text }));
 
-    // Connecting local stream
+    // Connecting Local and Remote user streams
     comm.on('local', (local) => {
       console.log('Connected to Local!');
       this.refs.localStream1.src = local.stream;
     });
-
-    // Connecting remote stream
     comm.on('connected', (peer) => {
       console.log('This is what we get when a peer connects: ', peer);
       comm.send(this.props.userData);
       this.refs.peerStream2.src = peer.stream;
     });
-
     comm.on('data', (peer) => {
       this.setState({ peerData: peer.data });
       this.props.handleScreenSharePeerData(peer.data);
     });
-
     comm.connect(room, { audio: true });
-    // Remove peer stream when disconnected
+
+    // Remove this help request from the list of requests if the session is ended
     comm.on('disconnect', () => {
-      console.log('inside!');
       socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
     });
-
-    // Unqueues when if user closes the window
     window.onbeforeunload = () => {
       socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
     };
-  } 
+
+    // Need to bind this since using es6 syntax
+    this.editorUpdated = this.editorUpdated.bind(this);
+    this.handleVideo = this.handleVideo.bind(this);
+  }
 
   editorUpdated(event) {
     const text = event.target.value;

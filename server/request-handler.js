@@ -1,9 +1,7 @@
 'use strict';
-// const request = require('request');
-
-// const db = require('./data/db/config');
 const User = require('./data/db/models/user');
 
+// Used by OAuth
 exports.loggedInUser = (req, res) => {
   res.redirect('/addUser');
 };
@@ -28,6 +26,7 @@ exports.isUser = (req, res, next) => {
   }
 };
 
+// Adds a user to the database, on the first login
 exports.addUser = (userProfile) => {
   User.find({ githubID: userProfile.id }, (err, userData) => {
     console.log('We got a response from the database');
@@ -62,15 +61,14 @@ exports.addUser = (userProfile) => {
   });
 };
 
+// Saves feedback given to a user
 exports.addFeedback = (usertoApplyFeedbackTo, feedback) => {
-  // Find the user that the feedback should apply to
   User.findOne({ githubID: usertoApplyFeedbackTo }, (err, userData) => {
     console.log('We got a response from the database');
     if (err) {
       console.error(err);
       return null;
     }
-
     userData.helperFeedback.push(feedback);
     // if email isn't in database, add new User entry, else do nothing
     userData.save((saveErr, newUser) => {
@@ -84,6 +82,7 @@ exports.addFeedback = (usertoApplyFeedbackTo, feedback) => {
   });
 };
 
+// For testing: wipes entire user database
 exports.wipeUserEntries = () => {
   User.remove({}, err => {
     if (err) {

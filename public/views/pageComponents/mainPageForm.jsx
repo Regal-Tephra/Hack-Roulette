@@ -27,8 +27,8 @@ class MainpageForm extends React.Component {
     this.updateLanguage = this.updateLanguage.bind(this);
   }
 
+  // Send help request to server and switch to screenshare
   sendRequestText(e) {
-    // Send request to serverc
     console.log(this.props.userData);
     if (this.state.requestText === '') {
       this.setState({ showAlert: { display: 'block', color: 'red' } });
@@ -54,11 +54,11 @@ class MainpageForm extends React.Component {
         });
     }
   }
+
+  // Form field state bindings
   updateRequestText(e) {
-    // update state based on textbox change
     this.setState({ requestText: e.target.value });
   }
-
   updateLanguage(e) {
     this.setState({ languageChosen: e.target.value });
   }
@@ -72,7 +72,7 @@ class MainpageForm extends React.Component {
             <select className="form-control" onChange={this.updateLanguage}>
               <option>Javascript</option>
               <option>Ruby</option>
-              <option>C+</option>
+              <option>C++</option>
               <option>Java</option>
               <option>Python</option>
             </select>
@@ -106,6 +106,5 @@ MainpageForm.propTypes = {
   userData: React.PropTypes.object.isRequired,
   sessionRoom: React.PropTypes.object.isRequired,
 };
-
 
 window.MainpageForm = MainpageForm;

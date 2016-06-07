@@ -80,8 +80,7 @@ class AppView extends React.Component {
   }
 
   handleScreenSharePeerData(peerData) {
-    this.setState({ peerData: peerData });
-    console.log("Peer Data has been updated in AppView!", this.state.peerData);
+    this.setState({ peerData });
     this.forceUpdate();
   }
 
@@ -111,50 +110,21 @@ class AppView extends React.Component {
     window.location = 'auth/github';
   }
 
-
   render() {
     return (
       <div className="container" id="appContainer">
         <Router>
-<<<<<<< af650d6ea81359b361cfe22032d5b8272b37ae5c
           <Route path="/" component={this.views.mainpage} />
           <Route path="/screenshare" component={this.views.screenshare} />
           <Route path="/login" component={this.views.landingpage} />
           <Route path="/feedback" component={this.views.feedback} />
           <Route path="/helper" component={this.views.helper} />
           <Route path="/profile" component={this.views.profile} />
-=======
-          <Route
-            onEnter={this.requireAuth}
-            path="/" component={this.views.mainpage}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/screenshare" component={this.views.screenshare}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/login" component={this.views.landingpage}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/feedback" component={this.views.feedback}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/helper" component={this.views.helper}
-          />
-          <Route
-            onEnter={this.requireAuth}
-            path="/profile" component={this.views.profile}
-          />
->>>>>>> Added readme assets
         </Router>
       </div>
     );
   }
 }
-
 
 ReactDOM.render(<AppView />, document.getElementById('app'));
 window.AppView = AppView;

@@ -1,12 +1,12 @@
 'use strict';
-// const _ = require('underscore');
-// const clients = {};
 
 module.exports = io => {
   io.of('/screenshare').on('connection', socket => {
     let room;
     let text = '';
     console.log(`Connected to: ${socket.id}`);
+
+    // When a user joins a room, set the socket to that room
     socket.on('join-room', roomName => {
       console.log('joining room', roomName);
       if (room) {
@@ -14,27 +14,16 @@ module.exports = io => {
       }
       room = roomName;
       socket.join(room);
-      console.log('emitting text change', text);
+
+      // Send current text
       socket.emit('text change', text);
     });
+
+    // When the text changes, boardcast the change
     socket.on('change', newText => {
       text = newText;
       console.log(room, text);
       socket.broadcast.to(room).emit('text change', text);
     });
-    // socket.on('connectUser', userId => {
-    //   console.log(userId);
-    //   clients[userId] = socket;
-    //   console.log('  Clients:', Object.keys(clients));
-    // });
-    // socket.on('disconnect', () => {
-    //   _.each(clients, (clientSocket, userId) => {
-    //     if (clientSocket === socket) {
-    //       delete clients[userId];
-    //       console.log('Disconnected:', userId);
-    //     }
-    //   });
-    //   console.log('  Clients:', Object.keys(clients));
-    // });
   });
 };
