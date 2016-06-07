@@ -69,7 +69,7 @@ class ScreenShareView extends React.Component {
     window.onbeforeunload = () => {
       socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
     };
-  }
+  } 
 
   editorUpdated(event) {
     const text = event.target.value;
