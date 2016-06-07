@@ -90,9 +90,8 @@ module.exports = io => {
         }
         console.log(data);
         socket.emit('receiveUserData', data);
+        return null;
       });
     });
-
-
   });
 };
