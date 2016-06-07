@@ -7,12 +7,6 @@
   io
 */
 
-  // TODO: Need to show loading page
-  // PSEUDOCODE:
-    // Step 1: Emit to Server and Show Loading View
-    // Step 2: Wait for response from server (callback/promise)
-    // Step 3: Turn off loading view and redirect when data is received
-
 class MainpageView extends React.Component {
   constructor(props) {
     super(props);
@@ -38,8 +32,6 @@ class MainpageView extends React.Component {
     );
   }
 }
-
-// col-md-offset-6
 
 MainpageView.propTypes = {
   userData: React.PropTypes.object.isRequired,

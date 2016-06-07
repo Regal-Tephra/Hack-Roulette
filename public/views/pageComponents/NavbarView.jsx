@@ -16,35 +16,34 @@ window.NavbarView = (props) => (
       </button>
 
       <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
+        <Link to="/">
+          HOME
+        </Link>
+      </button>
+
+      <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
+        <Link to="/profile">
+          Your Profile
+        </Link>
+      </button>
+
+      <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
         <Link to="/helper">
           Become a Helper
         </Link>
       </button>
 
       <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
-        <Link to="/">
-          [TEMP] HOME
-        </Link>
-      </button>
-
-      <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
         <Link to="/screenshare">
-          [TEMP] Screenshare
+          Screenshare
         </Link>
       </button>
 
       <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
         <Link to="/feedback">
-          [TEMP] Feedback
+          Feedback
         </Link>
       </button>
-
-      <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
-        <Link to="/profile">
-          [TEMP] Profile
-        </Link>
-      </button>
-
     </div>
   </nav>
 );

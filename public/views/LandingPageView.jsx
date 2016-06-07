@@ -13,8 +13,7 @@ function LandingPageView(props) {
           <img
             src={"../img/hack-roulette-logo-1.png"}
             alt="Logo"
-            width="500"
-            height="155"
+            width="100%"
           >
           </img>
           <div className="h1" id="upperText">Get help on your coding problems now</div>
