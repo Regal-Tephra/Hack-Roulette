@@ -21,7 +21,6 @@ exports.isLoggedIn = (req) => {
 };
 
 exports.isUser = (req, res, next) => {
-  // console.log('req', req);
   if (exports.isLoggedIn(req)) {
     next();
   } else {
@@ -38,7 +37,6 @@ exports.addUser = (userProfile) => {
     }
     // if email isn't in database, add new User entry, else do nothing
     if (userData.length === 0) {
-      // new user stored into a variable
       const user = new User({
         githubID: userProfile.id,
         primaryEmail: userProfile.emails[0].value,
@@ -60,6 +58,28 @@ exports.addUser = (userProfile) => {
     } else {
       console.log('User already exists.');
     }
+    return null;
+  });
+};
+
+exports.addFeedback = (usertoApplyFeedbackTo, feedback) => {
+  // Find the user that the feedback should apply to
+  User.findOne({ githubID: usertoApplyFeedbackTo }, (err, userData) => {
+    console.log('We got a response from the database');
+    if (err) {
+      console.error(err);
+      return null;
+    }
+
+    userData.helperFeedback.push(feedback);
+    // if email isn't in database, add new User entry, else do nothing
+    userData.save((saveErr, newUser) => {
+      if (err) {
+        console.error(saveErr);
+        return;
+      }
+      console.log(`${newUser} feedback has been added to the DB.`);
+    });
     return null;
   });
 };

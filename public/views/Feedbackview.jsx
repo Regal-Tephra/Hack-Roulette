@@ -39,11 +39,12 @@ class FeedbackView extends React.Component {
     e.preventDefault();
     const formData = {
       userData: this.props.userData,
-      // TODO: Need to grab session ID information
-      sessionID: '',
+      peerData: this.props.peerData,
       rating: this.state.rating,
       feedbackText: this.state.feedbackText,
     };
+    console.log("This is the form data", formData);
+
     $.ajax({
       url: '/feedback',
       dataType: 'json',
@@ -74,7 +75,10 @@ class FeedbackView extends React.Component {
   render() {
     return (<div>
       <NavbarView />
-      <form className="text-center col-sm-6 col-sm-offset-3 form-container" onSubmit={this.handleSubmit}>
+      <form
+        className="text-center col-sm-6 col-sm-offset-3 form-container"
+        onSubmit={this.handleSubmit}
+      >
         <div className="form-group">
           <p> How would you rate your experience out of 5? </p>
           <label className="radio-inline">
@@ -144,5 +148,6 @@ class FeedbackView extends React.Component {
 
 FeedbackView.propTypes = {
   userData: React.PropTypes.object.isRequired,
+  peerData: React.PropTypes.object.isRequired,
 };
 window.FeedbackView = FeedbackView;
