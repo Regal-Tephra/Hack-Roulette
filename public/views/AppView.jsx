@@ -61,6 +61,12 @@ class AppView extends React.Component {
           userData={this.state.userData}
           handleLogin={this.handleLogin}
         />,
+      profile: () =>
+        <ProfileView
+          sessionData={this.state.sessionData}
+          userData={this.state.userData}
+          handleLogin={this.handleLogin}
+        />,
     };
   }
 
@@ -101,11 +107,38 @@ class AppView extends React.Component {
     return (
       <div className="container" id="appContainer">
         <Router>
+<<<<<<< 12cb11f5543d624fdb231bf2b88ee35cecb05db0
           <Route path="/" component={this.views.mainpage} />
           <Route path="/screenshare" component={this.views.screenshare} />
           <Route path="/login" component={this.views.landingpage} />
           <Route path="/feedback" component={this.views.feedback} />
           <Route path="/helper" component={this.views.helper} />
+=======
+          <Route
+            onEnter={this.requireAuth}
+            path="/" component={this.views.mainpage}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/screenshare" component={this.views.screenshare}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/login" component={this.views.landingpage}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/feedback" component={this.views.feedback}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/helper" component={this.views.helper}
+          />
+          <Route
+            onEnter={this.requireAuth}
+            path="/profile" component={this.views.profile}
+          />
+>>>>>>> did some progress on profile view
         </Router>
 
       </div>

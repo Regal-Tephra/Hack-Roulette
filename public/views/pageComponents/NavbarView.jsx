@@ -38,6 +38,13 @@ window.NavbarView = (props) => (
           [TEMP] Feedback
         </Link>
       </button>
+
+      <button className="btn btn-default navbar-btn pull-right" onClick={props.videoHandler}>
+        <Link to="/profile">
+          [TEMP] Profile
+        </Link>
+      </button>
+
     </div>
   </nav>
 );
