@@ -2,20 +2,20 @@
 const handler = require('./request-handler');
 const User = require('./data/db/models/user');
 
-const helpRequestsQueue = [];
+// Start with a random room number and increment from there
 let helpRequestID = Math.floor(Math.random() * 10000);
-// start at a high number to allow testing with same api on multiple computers;
+const helpRequestsQueue = [];
 
 module.exports = io => {
   io.of('/help-requests').on('connection', socket => {
+    // Send current help request list when asked by client
     socket.on('getCurrentQueueList', () => {
-      // Sends current queueList back to client
       socket.emit('queueList', helpRequestsQueue);
     });
+
+    // Add to request queue when a request is made
     socket.on('addRequest', (message, respond) => {
-      // Add message to queue and respond with id so client can join room
       console.log('This is the message received', message);
-      // Add the help request to the queue
       const newHelpRequest = {
         id: ++helpRequestID,
         text: message.requestText,
@@ -23,16 +23,14 @@ module.exports = io => {
         client1sessionID: message.client1sessionID,
         userData: message.userData,
       };
-
       helpRequestsQueue.push(newHelpRequest);
 
-      // Add the help request to the respective user
+      // Associate the help request with the user in the database
       User.findOne({ githubID: message.userData.githubID }, (err, userDataFromDB) => {
         if (err) {
           console.error(err);
           return null;
         }
-        // Make edits to the current user
         console.log('This is the userData', userDataFromDB);
         userDataFromDB.helpRequests.push(newHelpRequest);
         userDataFromDB.save((saveErr, newUser) => {
@@ -45,7 +43,7 @@ module.exports = io => {
         return null;
       });
 
-      console.log('help requests', helpRequestsQueue);
+      // Respond with the helpRequestId (room number), so the client knows what session to join
       respond({ id: helpRequestID });
       socket.broadcast.emit('queueList', helpRequestsQueue);
     });
@@ -77,10 +75,10 @@ module.exports = io => {
         handler.findIndexOfProperty(helpRequestsQueue, 'id', roomID.roomID),
         1
       );
-
       socket.broadcast.emit('queueList', helpRequestsQueue);
     });
 
+    // Retreive user history/stats from database
     socket.on('getUserStats', (githubId) => {
       console.log('I got a socket request on getUserStats');
       User.findOne({ githubID: githubId }, (err, data) => {
@@ -88,7 +86,6 @@ module.exports = io => {
           console.error(err);
           return null;
         }
-        console.log(data);
         socket.emit('receiveUserData', data);
         return null;
       });

@@ -1,8 +1,9 @@
-/* global React ReactRouter NavbarView io $ */
-
-const Link = ReactRouter.Link;
-
-// TODO: Need to send feedback to server as part of a session/transaction
+/* global
+   React
+   ReactRouter
+   NavbarView
+   io
+   $ */
 
 class FeedbackView extends React.Component {
   constructor(props) {
@@ -43,22 +44,21 @@ class FeedbackView extends React.Component {
       rating: this.state.rating,
       feedbackText: this.state.feedbackText,
     };
-    console.log("This is the form data", formData);
 
     $.ajax({
       url: '/feedback',
       dataType: 'json',
       type: 'POST',
       data: formData,
-      success: function (data) {
+      success: data => {
         console.log('Successful Post!', data);
         this.setState({
           rating: '',
           feedbackText: '',
         });
         window.location = '#/';
-      }.bind(this),
-      error: (err) => {
+      },
+      error: err => {
         console.log('Woo we got an error');
         console.log(err);
         console.error(err.toString());
