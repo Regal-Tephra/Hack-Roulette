@@ -55,6 +55,7 @@ Hack Roulette is a platform for receiving prompt help to solve your coding bugs 
 ![profileExample](https://github.com/Regal-Tephra/Hack-Roulette/blob/master/readMeAssets/profileView.png)
 
 ## File Structure
+```
 ├── node_modules                  
 ├── public
 |   ├── components                   
@@ -96,6 +97,7 @@ Hack Roulette is a platform for receiving prompt help to solve your coding bugs 
 ├── package.json
 ├── testrunner.html
 └── README.md
+```
 
 ## Authors
 
