@@ -1,60 +1,127 @@
-/* global React */
+/* global
+   React
+   _
+   ReactRouter
+   NavbarView
+   Icecomm
+   localVideo
+   io
+   */
 
-const socket = io();
+// SCREENSHARE TODOS:
+  // 1. Get client1 and client2 information into the page
+  // 2. Get the reason for help onto the page as well
+
+// Need to remove API Key.
+const comm = new Icecomm('WLowOG2uYovkPa4dSAuyEdBhKVlUFSFZFjp8bMmG0wSeeLLVzO');
+const Link = ReactRouter.Link;
+const socket = io('/screenshare');
+const socketHelperQueue = io('/help-requests');
 class ScreenShareView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ['l']};
-    socket.on('text change', function(text){
-      console.log('RECEIVED', text.split('\n'));
-      this.setState({value: text.split('\n')});
-    }.bind(this));
-    socket.emit('connectUser', this.props.userId);
-  }
-  convertToText(html = '') {
-    let text;
-    console.log('html', html);
-    text = html.replace('\n', '');
-    text = text.replace(/<\/p>/gi, '</p>\n');
-    text = text.slice(0, text.length-1)
 
-    // Have browser strip html tags for us in false DIV element
-    let tempDiv = document.createElement('div');
-    tempDiv.innerHTML = text;
-    text = tempDiv.textContent || tempDiv.innerText || '';
-    text = _.unescape(text);
-    console.log('text', text);
-    return text;
-  }
-  // convertToDivText(text = '') {
-  //   console.log(text);
-  //   return text.replace(/\n/g, '<br />');
-  // }
+    const room = `room-${this.props.room}`;
+    console.log(`inside room# ${this.props.room}`);
+    // this.room = this.props.room;
+
+    this.state = {
+      text: '',
+      peerData: '',
+      showVideo: true,
+      userData: this.props.userData,
+    };
+    console.log('Screenshare userdata: ', this.props.userData);
+    this.editorUpdated = this.editorUpdated.bind(this);
+    this.handleVideo = this.handleVideo.bind(this);
+    console.log('joining room', room);
+
+    socket.emit('join-room', room);
+
+    socket.on('text change', text => this.setState({ text }));
+
+    // Connecting local stream
+    comm.on('local', (local) => {
+      console.log('Connected to Local!');
+      this.refs.localStream1.src = local.stream;
+    });
+
+    // Connecting remote stream
+    comm.on('connected', (peer) => {
+      console.log('This is what we get when a peer connects: ', peer);
+      comm.send(this.props.userData);
+      this.refs.peerStream2.src = peer.stream;
+    });
+
+    comm.on('data', (peer) => {
+      this.setState({ peerData: peer.data });
+      this.props.handleScreenSharePeerData(peer.data);
+    });
+
+    comm.connect(room, { audio: true });
+    // Remove peer stream when disconnected
+    comm.on('disconnect', () => {
+      console.log('inside!');
+      socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
+    });
+
+    // Unqueues when if user closes the window
+    window.onbeforeunload = () => {
+      socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
+    };
+  } 
 
   editorUpdated(event) {
-    const cleanedUpText = this.convertToText(event.target.innerHTML);
-    // console.log(cleanedUpText);
-    this.setState({
-      value: [] //cleanedUpText.split('\n')
-    });
-    socket.emit('change', cleanedUpText);
+    const text = event.target.value;
+    this.setState({ text });
+    socket.emit('change', text);
   }
-	render() {
-    console.log(this.state.value.map(line => '<p>'+line+'</p>'));
-		return (
+
+  handleVideo() {
+    socketHelperQueue.emit('removeFromQueue', { roomID: this.props.room });
+    comm.leave();
+  }
+
+  render() {
+    console.log(this.state.text);
+    return (
       <div>
-        <p>{this.props.userId}</p>
-        <div contentEditable onChange={this.editorUpdated.bind(this)} onBlur={this.editorUpdated.bind(this)}>
-          {this.state.value.map(line => '<p>'+line+'</p>')}
+        <NavbarView videoHandler={this.handleVideo} />
+        <div className="col-md-6">
+          <div className="text-center bg-primary">
+            Shared Text Editor
+          </div>
+          <textarea
+            className="session-text-share"
+            onChange={this.editorUpdated} value={this.state.text}
+          ></textarea>
+        </div>
+        <div className="col-md-6">
+          <div className="text-center bg-primary">Video Chat</div>
+          <div>
+            <video className="peerVideo col-md-3" ref="peerStream2" autoPlay></video>
+            <video className="localVideo" ref="localStream1" autoPlay></video>
+          </div>
+        </div>
+        <div>
+          <br />
+          <button className="btn btn-block btn-default">
+            <Link to="/feedback" >
+              Complete Session
+            </Link>
+          </button>
         </div>
       </div>
     );
-	}
+  }
 }
-// {this.state.value.map(line => <p>{line}</p>)}
+
+ScreenShareView.propTypes = {
+  sessionData: React.PropTypes.object.isRequired,
+  userData: React.PropTypes.object.isRequired,
+  room: React.PropTypes.number.isRequired,
+  userId: React.PropTypes.number.isRequired,
+  handleScreenSharePeerData: React.PropTypes.func.isRequired,
+};
 window.ScreenShareView = ScreenShareView;
-        // <input className="form-control"
-        // type="text"
-        // value={this.state.value}
-        // onChange={this.handleChange.bind(this)}
-        // />
+// videoHandler={this.handleVideo.bind(this)}
